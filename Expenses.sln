@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEnd", "BackEnd\BackEnd.csproj", "{9AA76300-2493-49DF-8913-9A0DE5FB89DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{5DA278E7-C18F-4BAB-A40C-D52117483280}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_UI", "WPF_UI\WPF_UI.csproj", "{5832E622-1B42-4AD5-9812-53809144E1BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2DE26AB4-068A-4D2D-89B6-7BBC415E8CA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C233054B-A4ED-4F17-B626-91126614D1F0}"
+	ProjectSection(SolutionItems) = preProject
+		TestSettings.testsettings = TestSettings.testsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0C1D0A14-0238-4F55-8311-427E6301340C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5832E622-1B42-4AD5-9812-53809144E1BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5832E622-1B42-4AD5-9812-53809144E1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5832E622-1B42-4AD5-9812-53809144E1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5832E622-1B42-4AD5-9812-53809144E1BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE26AB4-068A-4D2D-89B6-7BBC415E8CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE26AB4-068A-4D2D-89B6-7BBC415E8CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE26AB4-068A-4D2D-89B6-7BBC415E8CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE26AB4-068A-4D2D-89B6-7BBC415E8CA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
