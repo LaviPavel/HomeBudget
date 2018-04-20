@@ -29,9 +29,6 @@ namespace BackEnd
             InitBaseTables();
         }
 
-        // ToDO: load month data
-        // Todo: update month data => create new table
-
         private void InitDataBaseConnection(string dbFilePath = null)
         {
             //handle relevant native sqlite version to use (x86\x64)
@@ -166,5 +163,6 @@ namespace BackEnd
             command.ExecuteNonQuery();
 
         }
+
     }
 }

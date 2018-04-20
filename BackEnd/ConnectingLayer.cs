@@ -38,5 +38,68 @@ namespace BackEnd
             MonthlyExpensesDataTable.AcceptChanges();
         }
 
+        public void HandleDataTableUpdate(int row, int column)
+        {
+            
+            if (_monthlyExpenses.Expenses.Count < row + 1)
+            {
+                if (column == 1)
+                {
+                    // MonthlyExpensesDataTable.Rows[row][0].ToString() !=null
+                    //add only is there is a category and subcategory
+                        // check all the rest for null, add new expenses based on the check.
+                    _monthlyExpenses.Expenses.Add(new ExpensesObj(MonthlyExpensesDataTable.Rows[row][0].ToString(), MonthlyExpensesDataTable.Rows[row][1].ToString(), 0, 0));
+                }
+
+            }
+            else
+            {
+                var dataTableChangedCell = MonthlyExpensesDataTable.Rows[row][column];
+                switch (column)
+                {
+                    case 0:
+                        if (!dataTableChangedCell.Equals(_monthlyExpenses.Expenses[row].CategoryName))
+                        {
+                            _monthlyExpenses.Expenses[row].CategoryName = dataTableChangedCell.ToString();
+                        }
+                        break;
+                    case 1:
+                        if (!dataTableChangedCell.Equals(_monthlyExpenses.Expenses[row].SubCategoryName))
+                        {
+                            _monthlyExpenses.Expenses[row].SubCategoryName = dataTableChangedCell.ToString();
+                        }
+                        break;
+                    case 2:
+                        if (!dataTableChangedCell.Equals(_monthlyExpenses.Expenses[row].ExpectedAmount))
+                        {
+                            _monthlyExpenses.Expenses[row].ExpectedAmount = Convert.ToDouble(dataTableChangedCell);
+                        }
+                        break;
+                    case 3:
+                        if (!dataTableChangedCell.Equals(_monthlyExpenses.Expenses[row].ActualAmount))
+                        {
+                            _monthlyExpenses.Expenses[row].ActualAmount = Convert.ToDouble(dataTableChangedCell);
+                        }
+                        break;
+                    case 4:
+                        if (!dataTableChangedCell.Equals(_monthlyExpenses.Expenses[row].Description))
+                        {
+                            _monthlyExpenses.Expenses[row].Description = dataTableChangedCell.ToString();
+                        }
+                        break;
+                    default:
+                        throw new Exception("illigal column " + dataTableChangedCell);
+                }
+                
+            }
+
+            //db
+            // if new category => add
+            // if new subcategory => check with categories and add/update
+            // add/update month table
+
+
+        }
+
     }
 }
