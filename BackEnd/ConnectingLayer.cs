@@ -10,6 +10,7 @@ namespace BackEnd
         private MonthExpenses _monthlyExpenses = new MonthExpenses();
         public DataTable MonthlyExpensesDataTable = new DataTable();
 
+
         public void InitDatatable()
         {
             MonthlyExpensesDataTable.Columns.Add(new DataColumn("Category"));
@@ -17,9 +18,10 @@ namespace BackEnd
             MonthlyExpensesDataTable.Columns.Add(new DataColumn("Expected Amount"));
             MonthlyExpensesDataTable.Columns.Add(new DataColumn("Actual Amount"));
             MonthlyExpensesDataTable.Columns.Add(new DataColumn("Description"));
+            MonthlyExpensesDataTable.AcceptChanges();
         }
 
-        public void UpdateDataTableData(int month, int year)
+        public void LoadDataTableData(int month, int year)
         {
             try
             {
@@ -40,13 +42,17 @@ namespace BackEnd
 
         public void HandleDataTableUpdate(int row, int column)
         {
+
             
             if (_monthlyExpenses.Expenses.Count < row + 1)
             {
                 if (column == 1)
                 {
-                    // MonthlyExpensesDataTable.Rows[row][0].ToString() !=null
-                    //add only is there is a category and subcategory
+                    if (MonthlyExpensesDataTable.Rows[row][0] == null)
+                    {
+                        
+                    }
+                        //add only is there is a category and subcategory
                         // check all the rest for null, add new expenses based on the check.
                     _monthlyExpenses.Expenses.Add(new ExpensesObj(MonthlyExpensesDataTable.Rows[row][0].ToString(), MonthlyExpensesDataTable.Rows[row][1].ToString(), 0, 0));
                 }
@@ -93,6 +99,7 @@ namespace BackEnd
                 
             }
 
+            //todo: as new thread with db lock
             //db
             // if new category => add
             // if new subcategory => check with categories and add/update
