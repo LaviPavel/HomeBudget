@@ -1,59 +1,62 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Data;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
 using BackEnd;
 
 namespace WPF_UI
 {
-    public partial class Again : INotifyPropertyChanged
+    public partial class Again
     {
-        private DataTable _uiDataTable;
-        public static ConnectingLayer ConnectingLayerObject = new ConnectingLayer();
-        public event PropertyChangedEventHandler PropertyChanged;
-        public DataTable UiDataTable
-        {
-            get { return _uiDataTable; }
-            set
-            {
-                if (_uiDataTable != value)
-                {
-                    _uiDataTable = value;
-                    OnPropertyChanged();
-                    UiDataTable.AcceptChanges();
-                }
-            }
-        }
+        private static MonthExpenses _monthlyExpenses = new MonthExpenses();
 
+        public static MonthExpenses MonthlyExpenses
+        {
+            get { return _monthlyExpenses; }
+            set { _monthlyExpenses = value; }
+        }
 
         public Again()
         {
             DataContext = this;
             InitializeComponent();
-            InitMonthDataGrid();
-            DataGrid.CellEditEnding += DataGrid_CellEditEnding;
+
+            MonthlyExpenses.Expenses.CollectionChanged += Expenses_CollectionChanged;
+            DataGrid.ItemsSource = MonthlyExpenses.Expenses;
+
+            this.Closed += new EventHandler(MainWindow_Closed);
         }
 
-        public void InitMonthDataGrid()
+        private void MainWindow_Closed(object sender, EventArgs e)
         {
-            ConnectingLayerObject.InitDatatable();
-            UiDataTable = ConnectingLayerObject.MonthlyExpensesDataTable;
-            UiDataTable.AcceptChanges();
+            MonthlyExpenses.SaveData();
         }
 
-        private void DataGrid_CellEditEnding(object sender, System.Windows.Controls.DataGridCellEditEndingEventArgs e)
+        private void Expenses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            UiDataTable.AcceptChanges();
-            ConnectingLayerObject.MonthlyExpensesDataTable = UiDataTable;
-            ConnectingLayerObject.MonthlyExpensesDataTable.AcceptChanges();
-            ConnectingLayerObject.HandleDataTableUpdate(DataGrid.Items.IndexOf(DataGrid.CurrentItem),
-                e.Column.DisplayIndex);
+            foreach (var item in MonthlyExpenses.Expenses)
+            {
+                item.ExpensesObjChanged += Item_ExpensesObjChanged;
+            }
+
         }
 
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void Item_ExpensesObjChanged()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            MonthlyExpenses.SaveData();
         }
-        
+
+        private void DataGridNewRowButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0));
+        }
+
+        private void OnDelete(object sender, RoutedEventArgs e)
+        {
+            ExpensesObj removExpensesObjobj = ((FrameworkElement)sender).DataContext as ExpensesObj;
+            MonthlyExpenses.Expenses.Remove(removExpensesObjobj);
+        }
     }
 }

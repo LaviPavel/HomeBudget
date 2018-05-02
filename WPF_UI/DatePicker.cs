@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using BackEnd;
 using Calendar = System.Windows.Controls.Calendar;
 
 namespace WPF_UI
@@ -81,7 +82,7 @@ namespace WPF_UI
             var datePicker = GetCalendarsDatePicker(calendar);
             datePicker.IsDropDownOpen = false;
 
-            Again.ConnectingLayerObject.LoadDataTableData(datePicker.SelectedDate.Value.Month, datePicker.SelectedDate.Value.Year);
+            Again.MonthlyExpenses.LoadData(datePicker.SelectedDate.Value.Month, datePicker.SelectedDate.Value.Year);
         }
 
         private static Calendar GetDatePickerCalendar(object sender)

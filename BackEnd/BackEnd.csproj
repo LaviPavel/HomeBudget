@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectingLayer.cs" />
     <Compile Include="DbHandler.cs" />
     <Compile Include="MonthExpenses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

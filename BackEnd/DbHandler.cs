@@ -110,9 +110,9 @@ namespace BackEnd
             _connection.Close();
         }
         
-        public Collection<ExpensesObj> GetMonthDataFromDb(string tableName)
+        public ObservableCollection<ExpensesObj> GetMonthDataFromDb(string tableName)
         {
-            var expenses = new Collection<ExpensesObj>();
+            var expenses = new ObservableCollection<ExpensesObj>();
 
             if (!IsTableExists(tableName))
             {
@@ -121,7 +121,7 @@ namespace BackEnd
             
             using (SQLiteCommand command = _connection.CreateCommand())
             {
-                command.CommandText = @"select b.Name, c.Name as CategoryName, a.ActualAmount as SubCategoryName, a.ExpectedAmount, a.Description 
+                command.CommandText = @"select b.Name, c.Name as Category, a.ActualAmount as SubCategory, a.ExpectedAmount, a.Description 
                 from " + tableName + @" AS a
                 inner join Categories AS b on a.CategoryID = b.Id
                 inner join SubCategories AS c on a.SubCategoryID = c.Id";

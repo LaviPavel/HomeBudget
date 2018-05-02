@@ -5,10 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="Again" Height="355.296" Width="684.534">
+        Title="Again" Height="510.563" Width="803.432">
     <Grid>
         <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,25,0,0"/>
-        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="244" Margin="10,70,0,0" VerticalAlignment="Top" Width="528" ItemsSource="{Binding Path=UiDataTable,Mode=TwoWay}"/>
-        
+        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="300" Margin="10,70,0,0" VerticalAlignment="Top" Width="600" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Tag="{Binding}" Click="OnDelete">
+                                <Image Source="trashicon.png"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" Margin="30,400,0,0" VerticalAlignment="Top" Width="100" Click="DataGridNewRowButton_Click"/>
     </Grid>
 </Window>
