@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using log4net;
 
 
@@ -164,5 +166,13 @@ namespace BackEnd
 
         }
 
+        public async Task SaveToDb()
+        {
+            //SQLiteCommand command = _connection.CreateCommand();
+            //command.CommandText = @"insert into Categories (Name) values ('Income')";
+            //command.ExecuteNonQuery();
+            _log.Warn("SaveToDB was called");
+            await Task.Delay(30 * 1000);
+        }
     }
 }

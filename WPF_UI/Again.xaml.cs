@@ -31,7 +31,7 @@ namespace WPF_UI
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-            MonthlyExpenses.SaveData();
+            MonthlyExpenses.SaveData(true);
         }
 
         private void Expenses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
