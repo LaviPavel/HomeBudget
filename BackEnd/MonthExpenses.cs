@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using log4net;
-using Timer = System.Timers.Timer;
 
 namespace BackEnd
 {
     public class ExpensesObj
     {
+        private Guid _idGuid;
         private string _category;
         private string _subCategory;
         private double _expectedAmount;
         private double _actualAmount;
         private string _description;
 
-        public delegate void VoidDelegate();
-
+        public delegate void VoidDelegate(Guid idGuid);
         public event VoidDelegate ExpensesObjChanged;
 
+        public Guid IdGuid
+        {
+            get { return _idGuid;}
+            set { _idGuid = value; }
+        }
         public string Category
         {
             get { return _category; }
@@ -32,7 +30,6 @@ namespace BackEnd
                 OnExpensesObjChanged();
             }
         }
-
         public string SubCategory
         {
             get { return _subCategory; }
@@ -42,7 +39,6 @@ namespace BackEnd
                 OnExpensesObjChanged();
             }
         }
-
         public double ExpectedAmount
         {
             get { return _expectedAmount; }
@@ -52,7 +48,6 @@ namespace BackEnd
                 OnExpensesObjChanged();
             }
         }
-
         public double ActualAmount
         {
             get { return _actualAmount; }
@@ -62,7 +57,6 @@ namespace BackEnd
                 OnExpensesObjChanged();
             }
         }
-
         public string Description
         {
             get { return _description; }
@@ -73,40 +67,31 @@ namespace BackEnd
             }
         }
 
-
         public ExpensesObj(string category, string subCategory, double expectedAmount, double actualAmount,
             string description = null)
         {
+            IdGuid = Guid.NewGuid();
             Category = category;
             SubCategory = subCategory;
             ExpectedAmount = expectedAmount;
             ActualAmount = actualAmount;
             Description = description;
-
         }
-
         protected virtual void OnExpensesObjChanged()
         {
             if (ExpensesObjChanged != null)
             {
-                ExpensesObjChanged();
+                ExpensesObjChanged(this.IdGuid);
             }
         }
-
     }
 
     public class MonthExpenses
     {
         private int _month;
         private int _year;
-        private string _tableName;
         private DbHandler DBhandler = new DbHandler();
         private static ILog _log = LogManager.GetLogger(typeof(MonthExpenses));
-        private int _saveTriggerCount = 0;
-        private TimeSpan _SaveToDbTimeout = TimeSpan.FromMinutes(1);
-        private bool _IsSaveTriggered;
-        private DateTime _startTime;
-        private Task _saveToDbTask;
 
         public ObservableCollection<ExpensesObj> Expenses = new ObservableCollection<ExpensesObj>();
 
@@ -114,37 +99,30 @@ namespace BackEnd
         {
             _month = month;
             _year = year;
-            _tableName = "MonthData_" + _month + "_" + _year;
-            Expenses.Clear();
+            DBhandler.MonthTableName = "MonthData_" + _month + "_" + _year;
 
-            foreach (var item in DBhandler.GetMonthDataFromDb(_tableName))
+            Expenses.Clear();
+            foreach (var item in DBhandler.GetMonthDataFromDb())
             {
                 Expenses.Add(item);
             }
         }
-
-        public async void SaveData(bool force = false)
+        public void UpdateExpensesObjAtDbTable(Guid updateObjgGuid)
         {
-            _saveTriggerCount++;
-
-            if (!_IsSaveTriggered)
+            foreach (var expensesObj in Expenses)
             {
-                _startTime = DateTime.Now;
-                _IsSaveTriggered = true;
+                if (expensesObj.IdGuid == updateObjgGuid)
+                {
+                    DBhandler.UpdateObjInMonthTable(UpdateAction.Update, expensesObj);
+                    break;
+                }
             }
-
-            if ((_saveToDbTask == null || _saveToDbTask.IsCompleted) &&
-                (_saveTriggerCount > 10 || (DateTime.Now - _startTime > _SaveToDbTimeout) || force))
-            {
-                _saveTriggerCount = 0;
-                _IsSaveTriggered = false;
-
-                _saveToDbTask = DBhandler.SaveToDb();
-                await _saveToDbTask;
-            }
+            
         }
-
-
+        public void AddRemoveExpensesObjDbTable(UpdateAction action, ExpensesObj objToActionOn)
+        {
+            DBhandler.UpdateObjInMonthTable(action, objToActionOn);
+        }
     }
 
 }

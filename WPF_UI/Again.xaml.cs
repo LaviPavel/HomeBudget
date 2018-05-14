@@ -1,22 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Data;
-using System.Runtime.CompilerServices;
+using System.Collections;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using BackEnd;
 
 namespace WPF_UI
 {
     public partial class Again
     {
-        private static MonthExpenses _monthlyExpenses = new MonthExpenses();
-
-        public static MonthExpenses MonthlyExpenses
-        {
-            get { return _monthlyExpenses; }
-            set { _monthlyExpenses = value; }
-        }
+        public static MonthExpenses MonthlyExpenses { get; set; } = new MonthExpenses();
 
         public Again()
         {
@@ -25,27 +18,33 @@ namespace WPF_UI
 
             MonthlyExpenses.Expenses.CollectionChanged += Expenses_CollectionChanged;
             DataGrid.ItemsSource = MonthlyExpenses.Expenses;
-
-            this.Closed += new EventHandler(MainWindow_Closed);
         }
 
-        private void MainWindow_Closed(object sender, EventArgs e)
+        private void Expenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            MonthlyExpenses.SaveData(true);
-        }
-
-        private void Expenses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            foreach (var item in MonthlyExpenses.Expenses)
+            switch (e.Action)
             {
-                item.ExpensesObjChanged += Item_ExpensesObjChanged;
+                case NotifyCollectionChangedAction.Add:
+                    ExpensesObj addedExpensesObj = MonthlyExpenses.Expenses.Last();
+                    addedExpensesObj.ExpensesObjChanged += Item_ExpensesObjChanged;
+                    MonthlyExpenses.AddRemoveExpensesObjDbTable(UpdateAction.Add, addedExpensesObj);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    var removeExpensesObj = e.OldItems[0] as ExpensesObj;
+                    MonthlyExpenses.AddRemoveExpensesObjDbTable(UpdateAction.Remove, removeExpensesObj);
+                    break;
+                default:
+                    foreach (var item in MonthlyExpenses.Expenses)
+                    {
+                        item.ExpensesObjChanged += Item_ExpensesObjChanged;
+                    }
+                    break;
             }
-
         }
 
-        private void Item_ExpensesObjChanged()
+        private void Item_ExpensesObjChanged(Guid expensesObjGuid)
         {
-            MonthlyExpenses.SaveData();
+            MonthlyExpenses.UpdateExpensesObjAtDbTable(expensesObjGuid);
         }
 
         private void DataGridNewRowButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -55,8 +54,8 @@ namespace WPF_UI
 
         private void OnDelete(object sender, RoutedEventArgs e)
         {
-            ExpensesObj removExpensesObjobj = ((FrameworkElement)sender).DataContext as ExpensesObj;
-            MonthlyExpenses.Expenses.Remove(removExpensesObjobj);
+            ExpensesObj removeExpensesObj = ((FrameworkElement)sender).DataContext as ExpensesObj;
+            MonthlyExpenses.Expenses.Remove(removeExpensesObj);
         }
     }
 }

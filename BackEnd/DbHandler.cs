@@ -1,34 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 
 
 namespace BackEnd
 {
+    public enum UpdateAction { Add, Remove, Update }
     public class DbHandler
     {
         private static ILog _log = LogManager.GetLogger(typeof(DbHandler));
         private SQLiteConnection _connection;
         private readonly string _defaultDbInstance = "HomeBudgetDb.db";
         private readonly string _monthExpensesTableArgs =
-            "( `CategoryID` INTEGER NOT NULL, `SubCategoryID` INTEGER NOT NULL, `ExpectedAmount` INTEGER NOT NULL, `ActualAmount` INTEGER NOT NULL, `Description` TEXT )";
-        private readonly Dictionary<string, string> _initTablesCreate = new Dictionary<string, string>
-        {
-            {"Categories",  "( `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `Name` TEXT )"},
-            {"SubCategories", "( `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `CategoryId` INTEGER NOT NULL, `Name` TEXT )" }
-        };
-        
+            "(`Guid` TEXT NOT NULL UNIQUE, `Category` TEXT NOT NULL, `SubCategory` TEXT NOT NULL, `ExpectedAmount` INTEGER NOT NULL, `ActualAmount` INTEGER NOT NULL, `Description` TEXT )";
+        private static readonly Object obj = new Object();
 
+        public string MonthTableName;
         public DbHandler(string dbFilePath = null)
         {
             InitDataBaseConnection(dbFilePath);
-            InitBaseTables();
         }
 
         private void InitDataBaseConnection(string dbFilePath = null)
@@ -58,15 +52,6 @@ namespace BackEnd
             _connection = new SQLiteConnection(@"Data Source=" + dbFilePath + ";FailIfMissing=True;");
             _connection.Open();
         }
-
-        private void InitBaseTables()
-        {
-            foreach (var tableToCreate in _initTablesCreate)
-            {
-                CreateTable(tableToCreate.Key, tableToCreate.Value);
-            }
-        }
-
         private bool IsTableExists(string tableName)
         {
             SQLiteCommand command = _connection.CreateCommand();
@@ -88,7 +73,6 @@ namespace BackEnd
                 throw;
             }
         }
-
         private void CreateTable(string tableName, string tableArgs)
         {
             SQLiteCommand command = _connection.CreateCommand();
@@ -107,40 +91,65 @@ namespace BackEnd
                 }
             }
         }
+        private void CreateMonthTable()
+        {
+            CreateTable(this.MonthTableName, _monthExpensesTableArgs);
+            SQLiteCommand command = _connection.CreateCommand();
+            command.CommandText = @"insert into " + this.MonthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount) " +
+                                  "values ('" + Guid.NewGuid() + "', 'Income', 'Salary', 0, 0)";
+            command.ExecuteNonQuery();
+        }
+        private async Task WriteToMonthTable(SQLiteCommand cmd)
+        {
+            lock (obj)
+            {
+                // critical section
+                using (var tra = _connection.BeginTransaction())
+                {
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        tra.Commit();
+                        _log.Debug("Command executed successfully " + cmd.CommandText);
+                    }
+                    catch (Exception ex)
+                    {
+                        tra.Rollback();
+                        _log.ErrorFormat("I did nothing, because something wrong happened: {0}", ex);
+                    }
+                }
+            }
+        }
+
         public void Close()
         {
             _connection.Close();
         }
-        
-        public ObservableCollection<ExpensesObj> GetMonthDataFromDb(string tableName)
+        public ObservableCollection<ExpensesObj> GetMonthDataFromDb()
         {
             var expenses = new ObservableCollection<ExpensesObj>();
 
-            if (!IsTableExists(tableName))
+            if (!IsTableExists(this.MonthTableName))
             {
-                CreateMonthTable(tableName);
+                CreateMonthTable();
             }
             
             using (SQLiteCommand command = _connection.CreateCommand())
             {
-                command.CommandText = @"select b.Name, c.Name as Category, a.ActualAmount as SubCategory, a.ExpectedAmount, a.Description 
-                from " + tableName + @" AS a
-                inner join Categories AS b on a.CategoryID = b.Id
-                inner join SubCategories AS c on a.SubCategoryID = c.Id";
-
+                command.CommandText = @"select * from " + this.MonthTableName;
                 var rdr = command.ExecuteReader();
 
                 while (rdr.Read())
                 {
                     try
                     {
-                        string desc = rdr.IsDBNull(4)? null : rdr.GetString(4);
+                        string desc = rdr.IsDBNull(5)? null : rdr.GetString(5);
 
-                        expenses.Add(new ExpensesObj(rdr.GetString(0), rdr.GetString(1), rdr.GetDouble(2), rdr.GetDouble(3), desc));
+                        expenses.Add(new ExpensesObj(rdr.GetString(1), rdr.GetString(2), rdr.GetDouble(3), rdr.GetDouble(4), desc));
                     }
                     catch (Exception ex)
                     {
-                        _log.ErrorFormat("Error reading data from table {0}, {1}", tableName, ex);
+                        _log.ErrorFormat("Error reading data from table {0}, {1}", this.MonthTableName, ex);
                         throw;
                     }
                     
@@ -149,30 +158,39 @@ namespace BackEnd
 
             return expenses;
         }
-
-        private void CreateMonthTable(string tableName)
+        public async void UpdateObjInMonthTable(UpdateAction action, ExpensesObj expensesObj)
         {
-            CreateTable(tableName, _monthExpensesTableArgs);
             SQLiteCommand command = _connection.CreateCommand();
-            command.CommandText = @"insert into Categories (Name) values ('Income')";
-            command.ExecuteNonQuery();
+            command.CommandType = CommandType.Text;
+            command.Parameters.Add(new SQLiteParameter("@IdGuid", expensesObj.IdGuid));
+            command.Parameters.Add(new SQLiteParameter("@NewCategory", expensesObj.Category));
+            command.Parameters.Add(new SQLiteParameter("@NewSubCategory", expensesObj.SubCategory));
+            command.Parameters.Add(new SQLiteParameter("@NewExpectedAmount", expensesObj.ExpectedAmount));
+            command.Parameters.Add(new SQLiteParameter("@NewActualAmount", expensesObj.ActualAmount));
+            command.Parameters.Add(new SQLiteParameter("@NewDescription", expensesObj.Description));
 
-            command.CommandText = @"insert into SubCategories (CategoryId, Name) values ((select Id from Categories where Name = 'Income'),'Salary')";
-            command.ExecuteNonQuery();
+            switch (action)
+            {
+                case UpdateAction.Add:
+                    command.CommandText = @"insert into " + this.MonthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount, Description) values " +
+                            "(@IdGuid, @NewCategory, @NewSubCategory, @NewExpectedAmount, @NewActualAmount, @NewDescription)";
+                    break;
 
-            command.CommandText = @"insert into " + tableName + " (CategoryID, SubCategoryID, ExpectedAmount, ActualAmount) values (" +
-                                  "(select Id from Categories where Name = 'Income'),(select Id from SubCategories where Name = 'Salary'),0,0)";
-            command.ExecuteNonQuery();
+                case UpdateAction.Remove:
+                    command.CommandText = @"DELETE FROM " + this.MonthTableName + " Where Guid=@IdGuid";
+                    break;
 
+                case UpdateAction.Update:
+                    command.CommandText = @"UPDATE " + this.MonthTableName +
+                            " SET Category=@NewCategory, SubCategory=@NewSubCategory, ExpectedAmount=@NewExpectedAmount, ActualAmount=@NewActualAmount, Description=@NewDescription " +
+                            "Where Guid=@IdGuid";
+                    break;
+            }
+
+            await WriteToMonthTable(command);
         }
 
-        public async Task SaveToDb()
-        {
-            //SQLiteCommand command = _connection.CreateCommand();
-            //command.CommandText = @"insert into Categories (Name) values ('Income')";
-            //command.ExecuteNonQuery();
-            _log.Warn("SaveToDB was called");
-            await Task.Delay(30 * 1000);
-        }
+        
+
     }
 }
