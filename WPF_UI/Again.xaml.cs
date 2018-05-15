@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using BackEnd;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace WPF_UI
 {
     public partial class Again
     {
+        private SeriesCollection PieChartSeriesCollection = new SeriesCollection();
         public static MonthExpenses MonthlyExpenses { get; set; } = new MonthExpenses();
+        private static WidgetsStats ChartsStats { get; set; }
+        private Func<ChartPoint, string> PointLabel { get; set; }
 
         public Again()
         {
@@ -18,20 +23,67 @@ namespace WPF_UI
 
             MonthlyExpenses.Expenses.CollectionChanged += Expenses_CollectionChanged;
             DataGrid.ItemsSource = MonthlyExpenses.Expenses;
+
+            PointLabel = chartPoint =>
+                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+            ChartsStats = new WidgetsStats();
         }
 
+        private async Task NotificationBoxClearAsync()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(10));
+            NotificationTextBox.Clear();
+        }
+        private async Task CalcPieStatsAsync()
+        {
+            foreach (var item in ChartsStats.CalcPieChartStats(MonthlyExpenses.Expenses.ToList()))
+            {
+                PieChartSeriesCollection.Add(new PieSeries
+                {
+                    Title = item.Key,
+                    Values = new ChartValues<double> { item.Value },
+                    PushOut = 5,
+                    DataLabels = true,
+                    LabelPoint = PointLabel
+                });
+            }
+        }
+        private async void TriggerCalcPieStatsAsync()
+        {
+            PieChartSeriesCollection.Clear();
+            try
+            {
+                await CalcPieStatsAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+            PieChart.Series = PieChartSeriesCollection;
+        }
+        private async void DataGridNewRowButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DatePicker.SelectedDate != null)
+            {
+                MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0));
+            }
+            NotificationTextBox.Text = "Please select Moth to fill monthly expenses ";
+            await NotificationBoxClearAsync();
+        }
         private void Expenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            TriggerCalcPieStatsAsync();
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     ExpensesObj addedExpensesObj = MonthlyExpenses.Expenses.Last();
                     addedExpensesObj.ExpensesObjChanged += Item_ExpensesObjChanged;
-                    MonthlyExpenses.AddRemoveExpensesObjDbTable(UpdateAction.Add, addedExpensesObj);
+                    MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Add, addedExpensesObj);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     var removeExpensesObj = e.OldItems[0] as ExpensesObj;
-                    MonthlyExpenses.AddRemoveExpensesObjDbTable(UpdateAction.Remove, removeExpensesObj);
+                    MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Remove, removeExpensesObj);
                     break;
                 default:
                     foreach (var item in MonthlyExpenses.Expenses)
@@ -41,17 +93,18 @@ namespace WPF_UI
                     break;
             }
         }
-
-        private void Item_ExpensesObjChanged(Guid expensesObjGuid)
+        private void Item_ExpensesObjChanged(Guid ToUpdateObjGuid)
         {
-            MonthlyExpenses.UpdateExpensesObjAtDbTable(expensesObjGuid);
+            TriggerCalcPieStatsAsync();
+            foreach (var expensesObj in MonthlyExpenses.Expenses)
+            {
+                if (expensesObj.IdGuid == ToUpdateObjGuid)
+                {
+                    MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Update, expensesObj);
+                    break;
+                }
+            }
         }
-
-        private void DataGridNewRowButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0));
-        }
-
         private void OnDelete(object sender, RoutedEventArgs e)
         {
             ExpensesObj removeExpensesObj = ((FrameworkElement)sender).DataContext as ExpensesObj;

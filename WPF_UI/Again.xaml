@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="Again" Height="510.563" Width="803.432">
+        Title="Again" Height="600" Width="1000">
     <Grid>
         <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,25,0,0"/>
-        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="300" Margin="10,70,0,0" VerticalAlignment="Top" Width="600" ItemsSource="{Binding}">
+        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="388" Margin="10,70,0,0" VerticalAlignment="Top" Width="633" ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="40">
                     <DataGridTemplateColumn.CellTemplate>
@@ -21,6 +22,10 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" Margin="30,400,0,0" VerticalAlignment="Top" Width="100" Click="DataGridNewRowButton_Click"/>
+        <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" Margin="12,484,0,0" VerticalAlignment="Top" Width="100" Click="DataGridNewRowButton_Click"/>
+
+        <lvc:PieChart Name="PieChart" LegendLocation="Bottom" Hoverable="True" DataTooltip="{x:Null}" Margin="650,200,30,25"/>
+        <Separator Margin ="0,490,0,0"/>
+        <TextBox Name="NotificationTextBox" HorizontalAlignment="Center"  Height="20" TextWrapping="Wrap" VerticalAlignment="bottom" Width="950" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Margin="0,0,0,5"/>
     </Grid>
 </Window>

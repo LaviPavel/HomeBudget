@@ -107,19 +107,7 @@ namespace BackEnd
                 Expenses.Add(item);
             }
         }
-        public void UpdateExpensesObjAtDbTable(Guid updateObjgGuid)
-        {
-            foreach (var expensesObj in Expenses)
-            {
-                if (expensesObj.IdGuid == updateObjgGuid)
-                {
-                    DBhandler.UpdateObjInMonthTable(UpdateAction.Update, expensesObj);
-                    break;
-                }
-            }
-            
-        }
-        public void AddRemoveExpensesObjDbTable(UpdateAction action, ExpensesObj objToActionOn)
+        public void UpdateExObj_ToDB(UpdateAction action, ExpensesObj objToActionOn)
         {
             DBhandler.UpdateObjInMonthTable(action, objToActionOn);
         }
