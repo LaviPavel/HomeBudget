@@ -11,9 +11,10 @@ namespace WPF_UI
 {
     public partial class Again
     {
-        private SeriesCollection PieChartSeriesCollection = new SeriesCollection();
+        private WidgetsStats ChartsStats { get; set; }
+        
+        public SeriesCollection PieChartSeriesCollection { get; set; } = new SeriesCollection();
         public static MonthExpenses MonthlyExpenses { get; set; } = new MonthExpenses();
-        private static WidgetsStats ChartsStats { get; set; }
         private Func<ChartPoint, string> PointLabel { get; set; }
 
         public Again()
@@ -36,6 +37,7 @@ namespace WPF_UI
         }
         private async Task CalcPieStatsAsync()
         {
+
             foreach (var item in ChartsStats.CalcPieChartStats(MonthlyExpenses.Expenses.ToList()))
             {
                 PieChartSeriesCollection.Add(new PieSeries
@@ -59,8 +61,6 @@ namespace WPF_UI
             {
                 throw ex;
             }
-            
-            PieChart.Series = PieChartSeriesCollection;
         }
         private async void DataGridNewRowButton_Click(object sender, RoutedEventArgs e)
         {

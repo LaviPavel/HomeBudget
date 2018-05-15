@@ -8,8 +8,22 @@
         mc:Ignorable="d"
         Title="Again" Height="600" Width="1000">
     <Grid>
-        <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,25,0,0"/>
-        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="388" Margin="10,70,0,0" VerticalAlignment="Top" Width="633" ItemsSource="{Binding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="650"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
+        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="388" VerticalAlignment="Top" Width="650" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="40">
                     <DataGridTemplateColumn.CellTemplate>
@@ -22,10 +36,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" Margin="12,484,0,0" VerticalAlignment="Top" Width="100" Click="DataGridNewRowButton_Click"/>
-
-        <lvc:PieChart Name="PieChart" LegendLocation="Bottom" Hoverable="True" DataTooltip="{x:Null}" Margin="650,200,30,25"/>
-        <Separator Margin ="0,490,0,0"/>
-        <TextBox Name="NotificationTextBox" HorizontalAlignment="Center"  Height="20" TextWrapping="Wrap" VerticalAlignment="bottom" Width="950" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Margin="0,0,0,5"/>
+        <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="100" Click="DataGridNewRowButton_Click" Grid.Row="3" Grid.Column="1"/>
+        <lvc:PieChart Name="PieChart" Hoverable="True" DataTooltip="{x:Null}" Series="{Binding PieChartSeriesCollection}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="3"/>
+        <Separator Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Bottom" />
+        <TextBox Name="NotificationTextBox" VerticalAlignment="Bottom" Height="20" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Grid.Row="4" Grid.ColumnSpan="4"/>
     </Grid>
 </Window>
