@@ -9,7 +9,7 @@ using LiveCharts.Wpf;
 
 namespace WPF_UI
 {
-    public partial class Again
+    public partial class ExpensesManager
     {
         private WidgetsStats ChartsStats { get; set; }
         
@@ -17,7 +17,7 @@ namespace WPF_UI
         public static MonthExpenses MonthlyExpenses { get; set; } = new MonthExpenses();
         private Func<ChartPoint, string> PointLabel { get; set; }
 
-        public Again()
+        public ExpensesManager()
         {
             DataContext = this;
             InitializeComponent();

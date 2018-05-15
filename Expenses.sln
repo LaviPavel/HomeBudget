@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEnd", "BackEnd\BackEnd.csproj", "{9AA76300-2493-49DF-8913-9A0DE5FB89DD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{5DA278E7-C18F-4BAB-A40C-D52117483280}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_UI", "WPF_UI\WPF_UI.csproj", "{5832E622-1B42-4AD5-9812-53809144E1BA}"
 EndProject
@@ -33,10 +31,6 @@ Global
 		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AA76300-2493-49DF-8913-9A0DE5FB89DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DA278E7-C18F-4BAB-A40C-D52117483280}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5832E622-1B42-4AD5-9812-53809144E1BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5832E622-1B42-4AD5-9812-53809144E1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5832E622-1B42-4AD5-9812-53809144E1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86DA3659-88F2-4F14-BCE1-75DF2587F227}
 	EndGlobalSection
 EndGlobal

@@ -82,7 +82,7 @@ namespace WPF_UI
             var datePicker = GetCalendarsDatePicker(calendar);
             datePicker.IsDropDownOpen = false;
 
-            Again.MonthlyExpenses.LoadData(datePicker.SelectedDate.Value.Month, datePicker.SelectedDate.Value.Year);
+            ExpensesManager.MonthlyExpenses.LoadData(datePicker.SelectedDate.Value.Month, datePicker.SelectedDate.Value.Year);
         }
 
         private static Calendar GetDatePickerCalendar(object sender)
