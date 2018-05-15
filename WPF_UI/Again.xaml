@@ -6,7 +6,12 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="Again" Height="600" Width="1000">
+        Title="Again" Height="600" Width="900">
+
+    <Window.Resources>
+        <local:ConvertorAddMathActions x:Key="ConvertorAddMathActions"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -16,16 +21,19 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="650"/>
             <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
-        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="388" VerticalAlignment="Top" Width="650" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1">
+        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="auto" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.Header>
+                        <Image Source="trashicon.png"/>
+                    </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Tag="{Binding}" Click="OnDelete">
@@ -34,6 +42,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                <DataGridTextColumn Header="SubCategory" Binding="{Binding SubCategory}"/>
+                <DataGridTextColumn Header="Expected" Binding="{Binding ExpectedAmount, Converter={StaticResource ResourceKey=ConvertorAddMathActions}}"/>
+                <DataGridTextColumn Header="Actual" Binding="{Binding ActualAmount, Converter={StaticResource ResourceKey=ConvertorAddMathActions}}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="100" Click="DataGridNewRowButton_Click" Grid.Row="3" Grid.Column="1"/>

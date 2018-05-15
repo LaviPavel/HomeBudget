@@ -37,7 +37,6 @@ namespace WPF_UI
         }
         private async Task CalcPieStatsAsync()
         {
-
             foreach (var item in ChartsStats.CalcPieChartStats(MonthlyExpenses.Expenses.ToList()))
             {
                 PieChartSeriesCollection.Add(new PieSeries
@@ -68,9 +67,15 @@ namespace WPF_UI
             {
                 MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0));
             }
-            NotificationTextBox.Text = "Please select Moth to fill monthly expenses ";
+            await UiNotification("Please select Moth to fill monthly expenses ");
+        }
+
+        public async Task UiNotification(string message)
+        {
+            NotificationTextBox.Text = message;
             await NotificationBoxClearAsync();
         }
+
         private void Expenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             TriggerCalcPieStatsAsync();

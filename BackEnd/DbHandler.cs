@@ -27,6 +27,8 @@ namespace BackEnd
 
         private void InitDataBaseConnection(string dbFilePath = null)
         {
+            if (dbFilePath == null) {dbFilePath = _defaultDbInstance;}
+            
             //handle relevant native sqlite version to use (x86\x64)
             try
             {
@@ -42,11 +44,10 @@ namespace BackEnd
                 throw;
             }
 
-            //check for DB => create DB, init connection
-            if (dbFilePath == null)
+            //check for DB file and init connection
+            if (!File.Exists(Environment.CurrentDirectory + @"\" + dbFilePath))
             {
-                SQLiteConnection.CreateFile(_defaultDbInstance);
-                dbFilePath = _defaultDbInstance;
+                SQLiteConnection.CreateFile(dbFilePath);
             }
 
             _connection = new SQLiteConnection(@"Data Source=" + dbFilePath + ";FailIfMissing=True;");
@@ -96,7 +97,7 @@ namespace BackEnd
             CreateTable(this.MonthTableName, _monthExpensesTableArgs);
             SQLiteCommand command = _connection.CreateCommand();
             command.CommandText = @"insert into " + this.MonthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount) " +
-                                  "values ('" + Guid.NewGuid() + "', 'Income', 'Salary', 0, 0)";
+                                  "values ('" + Guid.NewGuid() + "', 'Income', 'Salary', 0, 1000)";
             command.ExecuteNonQuery();
         }
         private async Task WriteToMonthTable(SQLiteCommand cmd)
