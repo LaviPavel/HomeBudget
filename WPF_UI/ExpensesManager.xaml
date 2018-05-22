@@ -5,11 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WPF_UI"
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
         Title="ExpensesManager" Height="600" Width="900">
 
     <Window.Resources>
         <local:ConvertorAddMathActions x:Key="ConvertorAddMathActions"/>
+        <DataTemplate x:Key="CategoryAutoCompTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Label
+                    Content="{Binding Category}"
+                    Width="100" />
+                </StackPanel>
+            </DataTemplate>
+        <DataTemplate x:Key="SubCategoryAutoCompTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Label
+                    Content="{Binding SubCategory}"
+                    Width="100" />
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -27,28 +42,62 @@
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
+            
         <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
-        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="auto" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1">
+
+        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="auto" ItemsSource="{Binding  MonthlyExpenses.Expenses}" Grid.Row="2" Grid.Column="1" PreviewKeyDown="DataGrid_OnPreviewKeyDown">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="40">
-                    <DataGridTemplateColumn.Header>
-                        <Image Source="trashicon.png"/>
-                    </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.Header>
+                            <Image Source="trashicon.png" />
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Tag="{Binding}" Click="OnDelete">
+                                    <Image Source="trashicon.png"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Category" >
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Tag="{Binding}" Click="OnDelete">
-                                <Image Source="trashicon.png"/>
-                            </Button>
+                       <DataTemplate>
+                            <Label Content="{Binding Category}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                                <toolkit:AutoCompleteBox  Height="25" MaxDropDownHeight="300" FilterMode="StartsWith" IsTextCompletionEnabled="True" BorderThickness="0"
+                                    Text="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                    ItemTemplate="{StaticResource CategoryAutoCompTemplate}"
+                                    ValueMemberPath="Category"
+                                    ItemsSource="{Binding MonthlyExpenses.Expenses, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                </toolkit:AutoCompleteBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
-                <DataGridTextColumn Header="SubCategory" Binding="{Binding SubCategory}"/>
+                <DataGridTemplateColumn Header="SubCategory" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding SubCategory}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <toolkit:AutoCompleteBox  Height="25" MaxDropDownHeight="300" FilterMode="StartsWith" IsTextCompletionEnabled="True" BorderThickness="0"
+                                Text="{Binding SubCategory, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                ItemTemplate="{StaticResource SubCategoryAutoCompTemplate}"
+                                ValueMemberPath="SubCategory"
+                                ItemsSource="{Binding MonthlyExpenses.Expenses, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Expected" Binding="{Binding ExpectedAmount, Converter={StaticResource ResourceKey=ConvertorAddMathActions}}"/>
                 <DataGridTextColumn Header="Actual" Binding="{Binding ActualAmount, Converter={StaticResource ResourceKey=ConvertorAddMathActions}}"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-            </DataGrid.Columns>
+                </DataGrid.Columns>
         </DataGrid>
+            
         <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="100" Click="DataGridNewRowButton_Click" Grid.Row="3" Grid.Column="1"/>
         <lvc:PieChart Name="PieChart" Hoverable="True" DataTooltip="{x:Null}" Series="{Binding PieChartSeriesCollection}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="3"/>
         <Separator Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Bottom" />

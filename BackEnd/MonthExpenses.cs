@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using log4net;
 
 namespace BackEnd
@@ -26,8 +29,11 @@ namespace BackEnd
             get { return _category; }
             set
             {
-                _category = value;
-                OnExpensesObjChanged();
+                if (value != null)
+                {
+                    _category = value;
+                    OnExpensesObjChanged();
+                }
             }
         }
         public string SubCategory
@@ -35,8 +41,11 @@ namespace BackEnd
             get { return _subCategory; }
             set
             {
-                _subCategory = value;
-                OnExpensesObjChanged();
+                if (value != null)
+                {
+                    _subCategory = value;
+                    OnExpensesObjChanged();
+                }
             }
         }
         public double ExpectedAmount
@@ -93,7 +102,8 @@ namespace BackEnd
         private DbHandler DBhandler = new DbHandler();
         private static ILog _log = LogManager.GetLogger(typeof(MonthExpenses));
 
-        public ObservableCollection<ExpensesObj> Expenses = new ObservableCollection<ExpensesObj>();
+        public ObservableCollection<ExpensesObj> Expenses { get; set; } = new ObservableCollection<ExpensesObj>();
+
 
         public void LoadData(int month, int year)
         {
@@ -111,6 +121,8 @@ namespace BackEnd
         {
             DBhandler.UpdateObjInMonthTable(action, objToActionOn);
         }
+
+
     }
 
 }
