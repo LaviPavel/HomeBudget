@@ -13,26 +13,35 @@ namespace BackEnd
     public class DbHandler
     {
         private static ILog _log = LogManager.GetLogger(typeof(DbHandler));
-        private SQLiteConnection _connection;
-        private readonly string _defaultDbInstance = "HomeBudgetDb.db";
+        //private SQLiteConnection _connection;
+        //private readonly string _defaultDbInstance = "HomeBudgetDb.db";
         private readonly string _monthExpensesTableArgs =
             "(`Guid` TEXT NOT NULL UNIQUE, `Category` TEXT NOT NULL, `SubCategory` TEXT NOT NULL, `ExpectedAmount` INTEGER NOT NULL, `ActualAmount` INTEGER NOT NULL, `Description` TEXT )";
         private static readonly Object obj = new Object();
 
+        public SQLiteConnection Connection;
+        public readonly string DefaultDbInstance = "HomeBudgetDb.db";
         public string MonthTableName;
-        public DbHandler(string dbFilePath = null)
+        public DbHandler(string dbFileName = null)
         {
-            InitDataBaseConnection(dbFilePath);
+            InitDataBaseConnection(dbFileName);
         }
 
         private void InitDataBaseConnection(string dbFilePath = null)
         {
-            if (dbFilePath == null) {dbFilePath = _defaultDbInstance;}
+            if (dbFilePath == null)
+            {
+                dbFilePath = DefaultDbInstance;
+            }
+            else
+            {
+                dbFilePath = dbFilePath + ".db";
+            }
             
             //handle relevant native sqlite version to use (x86\x64)
             try
             {
-                if (File.Exists(Environment.CurrentDirectory))
+                if (!File.Exists(Environment.CurrentDirectory + @"\SQLite.Interop.dll"))
                 {
                     File.Copy(Environment.CurrentDirectory + @"\x64\SQLite.Interop.dll",
                         Environment.CurrentDirectory + @"\SQLite.Interop.dll");
@@ -50,12 +59,12 @@ namespace BackEnd
                 SQLiteConnection.CreateFile(dbFilePath);
             }
 
-            _connection = new SQLiteConnection(@"Data Source=" + dbFilePath + ";FailIfMissing=True;");
-            _connection.Open();
+            Connection = new SQLiteConnection(@"Data Source=" + dbFilePath + ";FailIfMissing=True;");
+            Connection.Open();
         }
         private bool IsTableExists(string tableName)
         {
-            SQLiteCommand command = _connection.CreateCommand();
+            SQLiteCommand command = Connection.CreateCommand();
             command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "'";
             
             try
@@ -70,13 +79,13 @@ namespace BackEnd
             }
             catch (Exception ex)
             {
-                _log.Error("Error accrued while looking for " + tableName + " at the DataBase file " + _defaultDbInstance ,ex);
+                _log.Error("Error accrued while looking for " + tableName + " at the DataBase file " + DefaultDbInstance ,ex);
                 throw;
             }
         }
         private void CreateTable(string tableName, string tableArgs)
         {
-            SQLiteCommand command = _connection.CreateCommand();
+            SQLiteCommand command = Connection.CreateCommand();
             command.CommandText = "CREATE TABLE '" + tableName + "' " + tableArgs;
 
             if (!IsTableExists(tableName))
@@ -95,17 +104,17 @@ namespace BackEnd
         private void CreateMonthTable()
         {
             CreateTable(this.MonthTableName, _monthExpensesTableArgs);
-            SQLiteCommand command = _connection.CreateCommand();
+            SQLiteCommand command = Connection.CreateCommand();
             command.CommandText = @"insert into " + this.MonthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount) " +
                                   "values ('" + Guid.NewGuid() + "', 'Income', 'Salary', 0, 1000)";
-            command.ExecuteNonQuery();
+            Dbwriter(command);
         }
-        private async Task WriteToMonthTable(SQLiteCommand cmd)
+        public async Task Dbwriter(SQLiteCommand cmd)
         {
             lock (obj)
             {
                 // critical section
-                using (var tra = _connection.BeginTransaction())
+                using (var tra = Connection.BeginTransaction())
                 {
                     try
                     {
@@ -124,18 +133,23 @@ namespace BackEnd
 
         public void Close()
         {
-            _connection.Close();
+            Connection.Close();
+            SQLiteConnection.ClearAllPools();         
         }
         public ObservableCollection<ExpensesObj> GetMonthDataFromDb()
         {
             var expenses = new ObservableCollection<ExpensesObj>();
+            if (MonthTableName == null)
+            {
+                return null;
+            }
 
             if (!IsTableExists(this.MonthTableName))
             {
                 CreateMonthTable();
             }
             
-            using (SQLiteCommand command = _connection.CreateCommand())
+            using (SQLiteCommand command = Connection.CreateCommand())
             {
                 command.CommandText = @"select * from " + this.MonthTableName;
                 var rdr = command.ExecuteReader();
@@ -145,8 +159,7 @@ namespace BackEnd
                     try
                     {
                         string desc = rdr.IsDBNull(5)? null : rdr.GetString(5);
-
-                        expenses.Add(new ExpensesObj(rdr.GetString(1), rdr.GetString(2), rdr.GetDouble(3), rdr.GetDouble(4), desc));
+                        expenses.Add(new ExpensesObj(rdr.GetString(1), rdr.GetString(2), rdr.GetDouble(3), rdr.GetDouble(4), rdr.GetGuid(0), desc));
                     }
                     catch (Exception ex)
                     {
@@ -159,16 +172,16 @@ namespace BackEnd
 
             return expenses;
         }
-        public async void UpdateObjInMonthTable(UpdateAction action, ExpensesObj expensesObj)
+        public async void UpdateObjInMonthTable(UpdateAction action, ExpensesObj newExpensesObj)
         {
-            SQLiteCommand command = _connection.CreateCommand();
+            SQLiteCommand command = Connection.CreateCommand();
             command.CommandType = CommandType.Text;
-            command.Parameters.Add(new SQLiteParameter("@IdGuid", expensesObj.IdGuid));
-            command.Parameters.Add(new SQLiteParameter("@NewCategory", expensesObj.Category));
-            command.Parameters.Add(new SQLiteParameter("@NewSubCategory", expensesObj.SubCategory));
-            command.Parameters.Add(new SQLiteParameter("@NewExpectedAmount", expensesObj.ExpectedAmount));
-            command.Parameters.Add(new SQLiteParameter("@NewActualAmount", expensesObj.ActualAmount));
-            command.Parameters.Add(new SQLiteParameter("@NewDescription", expensesObj.Description));
+            command.Parameters.Add(new SQLiteParameter("@IdGuid", newExpensesObj.IdGuid));
+            command.Parameters.Add(new SQLiteParameter("@NewCategory", newExpensesObj.Category));
+            command.Parameters.Add(new SQLiteParameter("@NewSubCategory", newExpensesObj.SubCategory));
+            command.Parameters.Add(new SQLiteParameter("@NewExpectedAmount", newExpensesObj.ExpectedAmount));
+            command.Parameters.Add(new SQLiteParameter("@NewActualAmount", newExpensesObj.ActualAmount));
+            command.Parameters.Add(new SQLiteParameter("@NewDescription", newExpensesObj.Description));
 
             switch (action)
             {
@@ -178,7 +191,7 @@ namespace BackEnd
                     break;
 
                 case UpdateAction.Remove:
-                    command.CommandText = @"DELETE FROM " + this.MonthTableName + " Where Guid=@IdGuid";
+                    command.CommandText = @"DELETE FROM " + this.MonthTableName + " Where Guid='"+ newExpensesObj.IdGuid + "'";
                     break;
 
                 case UpdateAction.Update:
@@ -188,7 +201,7 @@ namespace BackEnd
                     break;
             }
 
-            await WriteToMonthTable(command);
+            await Dbwriter(command);
         }
 
         

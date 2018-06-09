@@ -76,10 +76,10 @@ namespace BackEnd
             }
         }
 
-        public ExpensesObj(string category, string subCategory, double expectedAmount, double actualAmount,
+        public ExpensesObj(string category, string subCategory, double expectedAmount, double actualAmount, System.Guid idGuid,
             string description = null)
         {
-            IdGuid = Guid.NewGuid();
+            IdGuid = idGuid == Guid.Empty ? Guid.NewGuid() : idGuid;
             Category = category;
             SubCategory = subCategory;
             ExpectedAmount = expectedAmount;
