@@ -9,16 +9,16 @@ using System.Windows.Media;
 using BackEnd;
 using LiveCharts;
 using LiveCharts.Wpf;
+using MetroFramework.Forms;
 
 namespace WPF_UI
 {
     public partial class ExpensesManager
     {
-        private WidgetsStats ChartsStats { get; set; }
+        private StatsCalculations StatsCalc { get; set; }
         public SeriesCollection PieChartSeriesCollection { get; set; } = new SeriesCollection();
         public static MonthExpenses MonthlyExpenses { get; set; } = new MonthExpenses();
         private Func<ChartPoint, string> PointLabel { get; set; }
-
 
         public ExpensesManager()
         {
@@ -29,17 +29,17 @@ namespace WPF_UI
 
             PointLabel = chartPoint =>
                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-            ChartsStats = new WidgetsStats();
+            StatsCalc = new StatsCalculations();
         }
 
         private async Task NotificationBoxClearAsync()
         {
-            await Task.Delay(TimeSpan.FromSeconds(10));
+            await Task.Delay(TimeSpan.FromSeconds(5));
             NotificationTextBox.Clear();
         }
         private async Task CalcPieStatsAsync()
         {
-            foreach (var item in ChartsStats.CalcPieChartStats(MonthlyExpenses.Expenses.ToList()))
+            foreach (var item in StatsCalc.StatsPerCategotyAndTotalCalc(MonthlyExpenses.Expenses.ToList()))
             {
                 PieChartSeriesCollection.Add(new PieSeries
                 {
@@ -51,12 +51,25 @@ namespace WPF_UI
                 });
             }
         }
-        private async void TriggerCalcPieStatsAsync()
+        private async Task CalcBalanceAsync()
+        {
+            var fontColor = Brushes.Green;
+            if (StatsCalc.Balance < 0)
+            {
+                fontColor = Brushes.Red;
+            }
+
+            TotalBalanceBox.Text = StatsCalc.Balance.ToString();
+            TotalBalanceBox.Foreground = fontColor;
+        }
+        private async void TriggerStatsCalcAsync()
         {
             PieChartSeriesCollection.Clear();
             try
             {
+                
                 await CalcPieStatsAsync();
+                await CalcBalanceAsync();
             }
             catch (Exception ex)
             {
@@ -67,9 +80,13 @@ namespace WPF_UI
         {
             if (DatePicker.SelectedDate != null)
             {
-                MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0));
+                MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0, Guid.NewGuid()));
             }
-            await UiNotification("Please select Moth to fill monthly expenses ");
+            else
+            {
+                await UiNotification("Please select Moth to fill monthly expenses ");
+            }
+            
         }
 
         public async Task UiNotification(string message)
@@ -80,7 +97,7 @@ namespace WPF_UI
 
         private void Expenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            TriggerCalcPieStatsAsync();
+            TriggerStatsCalcAsync();
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
@@ -102,7 +119,7 @@ namespace WPF_UI
         }
         private void Item_ExpensesObjChanged(Guid ToUpdateObjGuid)
         {
-            TriggerCalcPieStatsAsync();
+            TriggerStatsCalcAsync();
             foreach (var expensesObj in MonthlyExpenses.Expenses)
             {
                 if (expensesObj.IdGuid == ToUpdateObjGuid)
@@ -118,7 +135,6 @@ namespace WPF_UI
             ExpensesObj removeExpensesObj = ((FrameworkElement)sender).DataContext as ExpensesObj;
             MonthlyExpenses.Expenses.Remove(removeExpensesObj);
         }
-
         private void DataGrid_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             var dg = sender as DataGrid;
@@ -158,7 +174,6 @@ namespace WPF_UI
             }
             return false;
         }
-
         private static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)

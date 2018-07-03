@@ -116,6 +116,11 @@ namespace BackEnd
             {
                 Expenses.Add(item);
             }
+
+            if (Expenses.Count < 1)
+            {
+                Expenses.Add(new ExpensesObj("Income", "Salary", 0, 1000, new Guid()));
+            }
         }
         public void UpdateExObj_ToDB(UpdateAction action, ExpensesObj objToActionOn)
         {

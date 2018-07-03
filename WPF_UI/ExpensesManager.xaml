@@ -1,4 +1,4 @@
-﻿<Window x:Class="WPF_UI.ExpensesManager"
+﻿<mah:MetroWindow x:Class="WPF_UI.ExpensesManager"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,6 +6,7 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WPF_UI"
         xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="ExpensesManager" Height="600" Width="900">
 
@@ -45,7 +46,7 @@
             
         <DatePicker x:Name="DatePicker" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
 
-        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="auto" ItemsSource="{Binding  MonthlyExpenses.Expenses}" Grid.Row="2" Grid.Column="1" PreviewKeyDown="DataGrid_OnPreviewKeyDown">
+        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="auto" ItemsSource="{Binding  MonthlyExpenses.Expenses}" Grid.Row="2" Grid.Column="1" PreviewKeyDown="DataGrid_OnPreviewKeyDown" GridLinesVisibility="None" BorderThickness="1" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="40">
                         <DataGridTemplateColumn.Header>
@@ -100,7 +101,9 @@
             
         <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="100" Click="DataGridNewRowButton_Click" Grid.Row="3" Grid.Column="1"/>
         <lvc:PieChart Name="PieChart" Hoverable="True" DataTooltip="{x:Null}" Series="{Binding PieChartSeriesCollection}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="3"/>
+        <TextBox Name="TotalBalanceBox" TextAlignment="Center" FontSize="30" Height="40" Width="150" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Grid.Row="2" Grid.Column="3" Margin="75,165,76,196"/>
         <Separator Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Bottom" />
         <TextBox Name="NotificationTextBox" VerticalAlignment="Bottom" Height="20" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Grid.Row="4" Grid.ColumnSpan="4"/>
     </Grid>
-</Window>
+</mah:MetroWindow>
+

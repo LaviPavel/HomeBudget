@@ -16,7 +16,7 @@ namespace BackEnd
         //private SQLiteConnection _connection;
         //private readonly string _defaultDbInstance = "HomeBudgetDb.db";
         private readonly string _monthExpensesTableArgs =
-            "(`Guid` TEXT NOT NULL UNIQUE, `Category` TEXT NOT NULL, `SubCategory` TEXT NOT NULL, `ExpectedAmount` INTEGER NOT NULL, `ActualAmount` INTEGER NOT NULL, `Description` TEXT )";
+            "(`Guid` VARCHAR(100) NOT NULL UNIQUE, `Category` TEXT NOT NULL, `SubCategory` TEXT NOT NULL, `ExpectedAmount` INTEGER NOT NULL, `ActualAmount` INTEGER NOT NULL, `Description` TEXT )";
         private static readonly Object obj = new Object();
 
         public SQLiteConnection Connection;
@@ -104,11 +104,8 @@ namespace BackEnd
         private void CreateMonthTable()
         {
             CreateTable(this.MonthTableName, _monthExpensesTableArgs);
-            SQLiteCommand command = Connection.CreateCommand();
-            command.CommandText = @"insert into " + this.MonthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount) " +
-                                  "values ('" + Guid.NewGuid() + "', 'Income', 'Salary', 0, 1000)";
-            Dbwriter(command);
         }
+
         public async Task Dbwriter(SQLiteCommand cmd)
         {
             lock (obj)
@@ -191,7 +188,8 @@ namespace BackEnd
                     break;
 
                 case UpdateAction.Remove:
-                    command.CommandText = @"DELETE FROM " + this.MonthTableName + " Where Guid='"+ newExpensesObj.IdGuid + "'";
+                    command.CommandText = @"DELETE FROM " + this.MonthTableName + 
+                            " Where Guid=@IdGuid";
                     break;
 
                 case UpdateAction.Update:
