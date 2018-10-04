@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<testgroup>
+  <test>
+    <actionType>Add</actionType>
+    <ResultsCount>1</ResultsCount>
+  </test>
+  <test>
+    <actionType>Update</actionType>
+    <ResultsCount>1</ResultsCount>
+  </test>
+  <test>
+    <actionType>Remove</actionType>
+    <ResultsCount>0</ResultsCount>
+  </test>
+</testgroup>

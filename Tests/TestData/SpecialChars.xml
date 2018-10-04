@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<testgroup>
+<test>
+<chars>ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ ⓜ ⓝ ⓞ ⓟ ⓠ ⓡ ⓢ ⓣ ⓤ ⓥ ⓦ ⓧ ⓨ ⓩ </chars>
+</test>
+<test>
+<chars>α в c ∂ ε f g н ι נ к ℓ м η σ ρ q я s т υ v ω x y z </chars>
+</test>
+<test>
+<chars>άв ς đ έ f ģ ħ ί ј ķ Ļ м ή ό ρ q ŕ ş ţ ù ν ώ x ч ž </chars>
+</test>
+<test>
+<chars>á ä ã æ ß b c © Ð d é ê f ƒ g h ï î j k £ m Ñ ñ η ô õ ø </chars>
+</test>
+<test>
+<chars>þ p q ® § š t ú û µ v w x ý ÿ z ž... </chars>
+</test>
+<test>
+<chars>♥ ♠ ♣ ♧ ♤ ♧ ♬ ♪ ♭ ♫ ♪ ♫ ♬ ♪ ♩ ♭ ♪ の ☆ ☆ ◆ ◇ ☀ ☂ ☁ ☮ </chars>
+</test>
+<test>
+<chars>"☺ ☻ ♂ ♀ ◕‿◕ ❤ ツ ! "" # $ % ↨ ↑ ↓ ø ¤ º ☆ ● ♫ ★ ☆ ♪ « † ✈ ㊛ "</chars>
+</test>
+<test>
+<chars>☜ © ® ☎ ☑ εïз ☠ ✄ ☪ ☣ ☢ ☠ ☭ ♈ ➸ ✓ ✔ ✕ ✖ ㊚ </chars>
+</test>
+<test>
+<chars>❣ ✚ ✪ ✣ ✤ ✥ ✦ ❉ ❥ ❦ ❧ ❃ ❂ ❁ ❀ </chars>
+</test>
+<test>
+<chars>➀ ➁ ➂ ➃ ➄ ➅ ➆ ➇ ➈ ➉ ➊ ➋ ➌ ➍ ➎ ➏ ➐ ➑ ➒ ➓ </chars>
+</test>
+<test>
+<chars>Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ </chars>
+</test>
+<test>
+<chars>Ƹ̵̡Ӝ̵̨̄Ʒ ξЖЗ εжз </chars>
+</test>
+<test>
+<chars>█ ▌▐▐ ▐ █ r4wr▐ █ ▐▐ █ ▌ </chars>
+</test>
+<test>
+<chars>»–(¯’v’¯)–»℘riηcεss »–(¯’v’¯)–» </chars>
+</test>
+<test>
+<chars>Some faces! ʕᴖᴥᴖʔ ಠ_ಠ ಥ~ಥ ಡ_ಡ ఠωఠ อ้_อ้ อ_อ ತ_ತ ರ_ರ ๏̯͡๏) రృరౕ の_の </chars>
+</test>
+<test>
+<chars>and.. A BEAR! ʕᴖᴥᴖʔ </chars>
+</test>
+<test>
+<chars>"Oh, different types of letters - ᵃ ᵇ ᶜ ᵈ ᵉ ᶠ ᵍ ʰ ᶤ ʲ ᵏ ˡ ᵐ ᶰ ᵒ ᵖ ᵠ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ Ａ Ｂ ＣＤ Ｅ Ｆ Ｇ Ｈ Ｉ Ｊ Ｋ Ｌ Ｍ Ｎ Ｏ Ｐ Ｑ Ｒ Ｓ Ｔ Ｕ Ｖ Ｗ Ｘ Ｙ Ｚ ａ ｂ ｃ ｄ ｅ ｆ ｇ ｈ ｉｊ ｋｌ ｍ ｎｏ ｐ ｑ ｒ ｓ ｔ ｕ ｖ ｗ ｘ ｙ ｚ "</chars>
+</test>
+<test>
+<chars>♡ Д Ξ • ° o ● ஜ ღ ҉ Ħ Đ ற × Ч ઈ ㋡ 【 】☆ з Հ ΐ ร г๏ ย ђ . - </chars>
+</test>
+<test>
+<chars>~ ' ˜ ¨ ¯ ` ¸ ۩ ★ ☳ ⓢ ₪ ɨ ζ ۞ ๑ Ѧ☂ ☁ ✄ ¬ © ™ ̯͡ ๏ ᶫᵒᵛᵉᵧₒᵤ </chars>
+</test>
+<test>
+<chars>✖ ᴴ ᴼ ͋ ░ ▒ ▓ │ ┤ ╡ ╢ ╖ ╕ ╣ ║ ╗ ╝ ╜ ╛ ┐└ ┴ ┬ ├ ─ ┼ ╞ ╟ </chars>
+</test>
+<test>
+<chars>╚ ╔ ╩ ╦ ╠ ═ ╬ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ ┘ ┌ 乃 ฿ Ѡ Ҩ Ӈ </chars>
+</test>
+<test>
+<chars>ʎ ʍ ʌ ʇ ɹ ɯ ן ʞ ſ ı ɥ ƃ ɟ ǝ ɔ ɐ </chars>
+</test>
+<test>
+<chars>ค ๒ ς ๔ є Ŧ ɠ ђ เ ן к l ๓ ภ ๏ թ ợ г א t ย ש ฬ א ץ </chars>
+</test>
+<test>
+<chars>α в c ם/∂/δ є ғ ɢ н ι נ к ℓ м и σ ρ q я s т υ v ω x ץ/ч z </chars>
+</test>
+<test>
+<chars>⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ ⒨ ⒩ ⒪ ⒫ ⒬ ⒭ ⒮ ⒯ ⒰ ⒱ ⒲ ⒳ ⒴ ⒵ </chars>
+</test>
+<test>
+<chars>Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ </chars>
+</test>
+<test>
+<chars>ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ ⓜ ⓝ ⓞ ⓟ ⓠ ⓡ ⓢ ⓣ ⓤ ⓥ ⓦ ⓧ ⓨ ⓩ </chars>
+</test>
+<test>
+<chars>Ȁ Ȃ Ȧ Ӓ Ӑ Ʌ Ⱥ Ά Α Λ Ѧ Д ᾈ ᾉ ᾊ ᾋ ᾌ ᾍ ᾎ ᾏ • ȁ ȃ ɑ ɒ ɐ ȧ α ά Δ д ӓ ӑ ᾀ ᾁ ᾂ ᾃ ᾄ ᾅ ᾆ ᾇ ᾰ ᾱ ᾲ ᾳ ᾴ ᾶ ᾷɃ β Ѣ • Ђ Ъ Ь ъ ь Ϧ ɓ ʙ ϐ ѣ б в Ҍ ҍ </chars>
+</test>
+<test>
+<chars>Ȼ ʗ Ͻ Ͼ Ͽ Ϲ Ѽ Ҁ Ҫ • ɔ ȼ ς ϲ ѽ ҁ ҫɖ ɗ ȡ ʠ δ </chars>
+</test>
+<test>
+<chars>Ȅ Ȇ Ӗ Ɇ Ѐ Ȩ Ȝ Έ Ё Ε Ξ Σ ξ Є Э Ӭ З Ѯ Ҿ Ҽ Ӛ Ә Ӟ Ҙ ә • ə ε έ з є э е ϵ ϶ ȅ ɘ ȇ ɇ ȩ ѐ ё ѯ ҿ ҽ ӛ ӟ ҙ ӗ ӭϜ Ғ Ӻ • ϝ ɟ ʄ ӻ ғѠ Ѿ • ɠ ɡ ʛ ɢ ɞ ʚ ɕ </chars>
+</test>
+<test>
+<chars>Ȟ Ή Η Ң Ҥ Һ Ӈ Ӊ Ҕ ᾘ ᾙ ᾚ ᾛ ᾜ ᾝ ᾞ ᾟ • ʜ ɦ ћ ʮ ʯ ɧ ȟ ɥ ђ Ћ н ӈ ӊ ң ҕ ҥ </chars>
+</test>
+<test>
+<chars>Ȉ Ȋ Ί Ϊ Ῐ Ῑ Ὶ Ί • ȉ ɨ ɩ ɪ ȋ ϊ ΐ ῐ ῑ ῒ ΐ ῖ ῗɈ Ј • ɉ ȷ ʝ ϳЌ Қ Ҟ Ҝ Ҟ Ӄ • ʞ ɮ κ ќ қ ҝ ҟ ҡ ӄ </chars>
+</test>
+<test>
+<chars>Ƚ ζ • ʟ ɫ ɬ ʅ ɭ ȴ ʃ ʄ ʆϺ Ӎ • ɯ ɰ ɱ ϻ ӎ </chars>
+</test>
+<test>
+<chars>Ƞ Ν Π Ѝ Ҋ Ӣ Ӥ Ώ Ω Л Й • ȵ ɲ ɳ ɴ ή π η и й ѝ л ҋ ӣ ӥ ᾐ ᾑ ᾒ ᾓ ᾔ ᾕ ᾖ ᾗ ὴ ή ὴ ή </chars>
+</test>
+<test>
+<chars>Ȍ Ӧ Ȏ Ȭ Ȫ Ȯ Ȱ ʘ Ό θ Ѻ ϴ Ӫ Θ Ѳ Ю ф Ὸ Ό • ȫ ȭ ȍ ȏ ȯ ȱ ɵ ɸ σ ϕ ό Φ ѻ ѳ ӧ ӫ </chars>
+</test>
+<test>
+<chars>Ρ Ҏ Ῥ • ρ ϼ Ϸ ϸ φ ҏ ῤ Ɋ Ϙ • ϙ ɋ Ϥ ϥ ϱ </chars>
+</test>
+<test>
+<chars>Ȑ Ȓ Ɍ Я Г Ѓ Ӷ Ґ • я ɹ ɺ ɻ ɼ ɽ ɾ ɿ ȑ ȓ ɍ ʀ ʁ г ѓ ґ ӷ </chars>
+</test>
+<test>
+<chars>Ș Ϩ ϩ Ϛ • ϛ ɛ ɜ ɝ ʂ ȿ șȚ Ⱦ Ҭ • τ Ϯ ϯ ȶ ʇ ʈ ț т ҭ </chars>
+</test>
+<test>
+<chars>Ʉ Ȗ Ώ Ω ц • ȕ ȗ ʮ ʯ ʉ ʊ υ μ ϑ ϋ ύ ΰɅ Ѵ Ѷ • ɣ ʋ ʌ ѵ ѷ ῠ ῡ ῢ ΰ ῦ ῧ </chars>
+</test>
+<test>
+<chars>Ϣ Ш Щ • ϣ ш щ ѿ ѡ ʍ ώ ψ Ψ ω ϖ ᾠ ᾡ ᾢ ᾣ ᾤ ᾥ ᾦ ᾧ ῲ ῳ ῴ ῶ ῷ ὼ ώ </chars>
+</test>
+<test>
+<chars>Ϫ Ж Җ χ Ӽ Ҳ Ӿ Ӂ Ӝ • ж ϰ ϗ ӽ ӿ ҳ ӂ ӝ җ </chars>
+</test>
+<test>
+<chars>Ȳ Ɏ ϒ ϓ ϔ Ύ Ϋ Υ Ў У ц Ѱ Ӱ Ӯ Ӳ Ӵ Ҷ Ҹ Ӌ Ῠ Ῡ Ὺ Ύ • Ч џ ў ү ұ ɣ ɏ ȳ ʎ ʏ ɤ Ϟ λ ϫ ӯ ӱ ӳ ӵ ҷ ҹ ӌ </chars>
+</test>
+<test>
+<chars>Ȥ • ɀ ʐ ʑ ȥ ʒ ʓ ȝ </chars>
+</test>
+<test>
+<chars>① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳ </chars>
+</test>
+<test>
+<chars>⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂ ⒃ ⒄ ⒅ ⒆ ⒇ </chars>
+</test>
+<test>
+<chars>⒈ ⒉ ⒊ ⒋ ⒌ ⒍ ⒎ ⒏ ⒐ ⒑ ⒒ ⒓ ⒔ ⒕ ⒖ ⒗ ⒘ ⒙ ⒚ ⒛ </chars>
+</test>
+<test>
+<chars>❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ❿ ⓫ ⓬ ⓭ ⓮ ⓯ ⓰ ⓱ ⓲ ⓳ ⓴ </chars>
+</test>
+<test>
+<chars>⓵ ⓶ ⓷ ⓸ ⓹ ⓺ ⓻ ⓼ ⓽ ⓾ </chars>
+</test>
+<test>
+<chars>Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ Ⅹ Ⅺ Ⅻ Ⅼ Ⅽ Ⅾ Ⅿ </chars>
+</test>
+<test>
+<chars>ⅰ ⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ ⅼ ⅽ ⅾ ⅿ </chars>
+</test>
+<test>
+<chars>← → ↑ ↓ ↔ ↕ ↖ ↗ ↘ ↙ ↚ ↛ ↜ ↝ ↞ ↟ </chars>
+</test>
+<test>
+<chars>↠ ↡ ↢ ↣ ↤ ↥ ↦ ↧ ↨ ↩ ↪ ↫ ↬ ↭ ↮ ↯ ↰ ↱ ↲ ↳ ↴ ↵ ↶ ↷ ↸ ↹ ↺ ↻ ↼ ↽ ↾ ↿ </chars>
+</test>
+<test>
+<chars>⇀ ⇁ ⇂ ⇃ ⇄ ⇅ ⇆ ⇇ ⇈ ⇉ ⇊ ⇋ ⇌ ⇍ ⇎ ⇏ ⇐ ⇑ ⇒ ⇓ ⇔ ⇕ ⇖ ⇗ ⇘ ⇙ ⇚ ⇛ ⇜ ⇝ ⇞ ⇟ </chars>
+</test>
+<test>
+<chars>⇠ ⇡ ⇢ ⇣ ⇤ ⇥ ⇦ ⇧ ⇨ ⇩ ⇪ </chars>
+</test>
+<test>
+<chars>℀ ℁ ℂ ℃ ℄ ℅ ℆ ℇ ℈ ℉ ℊ ℋ ℌ ℍ ℎ ℏ ℐ ℑ ℒ ℓ ℔ ℕ № ℗ ℘ ℙ ℚ ℛ ℜ ℝ ℞ ℟ </chars>
+</test>
+<test>
+<chars>℠ ℡ ™ ℣ ℤ ℥ Ω ℧ ℨ ℩ K Å ℬ ℭ ℮ ℯ ℰ ℱ Ⅎ ℳ ℴ ℵ ℶ ℷ ℸ ℻ ⅍ ⅎ ⅓ ⅔ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅛ ⅜ ⅝ ⅞ ⅟ </chars>
+</test>
+<test>
+<chars>㊊㊋㊌㊍㊎㊏ </chars>
+</test>
+<test>
+<chars>㊐㊑㊒㊓㊔㊕㊖㊗㊘㊜㊝㊞㊟㊠㊡㊢ </chars>
+</test>
+<test>
+<chars>㊣㊤㊥㊦㊧㊨㊩㊪㊫㊬㊭㊮㊯㊰ </chars>
+</test>
+<test>
+<chars>☽☾✗✘✓ ✔ ☐ ☑ ☒ ✕ ✖✚✪✣✤✥ </chars>
+</test>
+<test>
+<chars>✱ ✲ ✳ ❃ ❂ ❁ ❀ ✿ ✾ ✽ ✼ ✻ ✺ ✹ </chars>
+</test>
+<test>
+<chars>✸ ✷ ✶ ✵ ✴ ❄ ❅ ❆ ❇ ❈ ❉ ❊ ❋ ❖ </chars>
+</test>
+<test>
+<chars>☀ ☂ ☁ ❣ ✚ ✪ ✣ ✤ ✥ ✦ ❉ ❥ ❦ ❧ </chars>
+</test>
+<test>
+<chars>❃ ❂ ❁ ❀ ✄ ☪ ➸ ♨ ☢ ☠ ☭ ♈ ☮ ☯ </chars>
+</test>
+<test>
+<chars>♋ ☡ ☢ ☣ ☤ ☥ ☦ ☧ ☨ ☩ ☪ ☫ ☬ ☭ </chars>
+</test>
+<test>
+<chars>♔ ♕ ♖ ♗ ♘ ♙ ♚ ♛ ♜ ♝ ♞ ♟ ۩ ۞ </chars>
+</test>
+<test>
+<chars>♠ ♡ ♢ ♣ ♤ ♥ ♦ ♧ ✦✧✩✫✬✭✮✯✰ ☼ ❣ </chars>
+</test>
+<test>
+<chars>♲ ♳ ♴ ♵ ♶ ♷ ♸ ♹ ♺ ♻ ♼ ♽♯♩♪♫♬♭ </chars>
+</test>
+<test>
+<chars>☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷ ☚ ☛ ☜ ☝ ☞ ☟ </chars>
+</test>
+<test>
+<chars>☿ ♀ ♁ ♂ ♃ ♄ ♅ ♆ ♇ ♈ ♉ ♊ ♌ ♍ </chars>
+</test>
+<test>
+<chars>△ ▲ ☆ ★ ◇ ◆ ■ □ ▽ ▼ ❤❥♎ ♏ ✐✌ </chars>
+</test>
+<test>
+<chars>๑ ＃ ＠ ＆ ＊ ￥ ☸ ☆ ★ ✪ ¤ ☼ ☀ ☽☾ </chars>
+</test>
+<test>
+<chars>♡ ღ☻ ☺ ❂ ◕ ⊕ ☉ Θ o O ♋ ☯ ㊝ ⊙ ◎ </chars>
+</test>
+<test>
+<chars>◑ ◐ ۰ • ● ▪ ▫ ｡ ﾟ ๑ ☜ ☞ ☂ ♨ ☎ ☏ ✍✡ </chars>
+</test>
+<test>
+<chars>ಠ_ಠ ◕ ◡ ◕ °__° ಥ__ಥ </chars>
+</test>
+<test>
+<chars>(-`ω´- ) (●ゝω)ノヽ(∀＜●) >_</chars>
+</test>
+<test>
+<chars>⊙▂⊙ ⊙o⊙ ⊙︿⊙　 ⊙ω⊙　⊙△⊙　 ⊙▽⊙ </chars>
+</test>
+<test>
+<chars>(◡_◡) (◕-◕) (◕o◕) (∩_∩) </chars>
+</test>
+<test>
+<chars>┄ ┅ ┆ ┇ ┈ ┉ ┊ ┋ ⋮ ⋯ ⋰ ⋱ </chars>
+</test>
+<test>
+<chars>─ ━ │ ┃┌ ┐ ┍ ┑ ┎ ┒ ┏ ┓ └ ┘ ┕ ┙ ┖ ┚ ┗ ┛ </chars>
+</test>
+<test>
+<chars>┞ ┟ ┢ ┡ ┦ ┧ ┩ ┪ </chars>
+</test>
+<test>
+<chars>┣ ┫┝ ┥┠ ┨├ ┤ </chars>
+</test>
+<test>
+<chars>┬ ┭ ┮ ┯ ┰ ┱ ┲ ┳ ┴ ┵ ┶ ┷ ┸ ┹ ┺ ┻ ┼ ┽ ┾ ┿ </chars>
+</test>
+<test>
+<chars>╀ ╁ ╂ ╃ ╄ ╅ ╆ ╇ ╈ ╉ ╊ ╋ ╌ ╍ ╎ ╏ </chars>
+</test>
+<test>
+<chars>═ ║ ╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙ ╚ ╛ ╜ ╝ ╞ ╟ </chars>
+</test>
+<test>
+<chars>╠ ╡ ╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ╪ ╫ ╬ </chars>
+</test>
+<test>
+<chars>╭ ╮ ╯ ╰ ╱ ╲ ╳ ╴ ╵ ╶ ╷ ╸ ╹ ╺ ╻ </chars>
+</test>
+<test>
+<chars>≡ ≢ ≣ ≤ ≥ ≦ ≧ ≨ ≩ ≪ ≫ ≭ ≮ ≯ ≰ ≱ ≲ ≳ ≴ ≵ ≶ ≷ ≸ ≹ ≺ ≻ ≼ ≽ ≾ ≿ </chars>
+</test>
+<test>
+<chars>⊀ ⊁ ⊂ ⊃ ⊄ ⊅ ⊆ ⊇ ⊈ ⊉ ⊊ ⊋ ⊏ ⊐ ⊑ ⊒ </chars>
+</test>
+<test>
+<chars>⊕ ⊖ ⊗ ⊘ ⊙ ⊚ ⊛ ⊜ ⊝ ⊞ ⊟ </chars>
+</test>
+<test>
+<chars>⊠ ⊡ ⊢ ⊣ ⊤ ⊥ ⊦ ⊧ ⊨ ⊩ ⊪ ⊫ ⊬ ⊭ ⊮ ⊯ </chars>
+</test>
+<test>
+<chars>⊰ ⊱ ⊲ ⊳ ⊴ ⊵ ⊶ ⊷ ⊸ ⊹ ⊺ ⊻ ⊼ ⊽ ⊾ ⊿ </chars>
+</test>
+<test>
+<chars>⋀ ⋁ ⋂ ⋃ ⋄ ⋅ ⋆ ⋇ ⋈ ⋉ ⋊ ⋋ ⋌ ⋍ </chars>
+</test>
+<test>
+<chars>⋎ ⋏ ⋐ ⋑ ⋒ ⋓ ⋔ ⋖ ⋗ ⋘ ⋙ ⋚ ⋛ ⋜ ⋝ ⋞ ⋟ </chars>
+</test>
+<test>
+<chars>⋠ ⋡ ⋢ ⋣ ⋤ ⋥ ⋦ ⋧ ⋨ ⋩ ⋪ ⋫ ⋬ ⋭ </chars>
+</test>
+<test>
+<chars>❛❜❝❞【】〖〗►◄﹃﹄『』◢ ◣◥ ◤ </chars>
+</test>
+<test>
+<chars>≎≎≎≎≎≎≎≎ </chars>
+</test>
+<test>
+<chars>==== ☠ ==== </chars>
+</test>
+<test>
+<chars>☆═━┈┈━═☆ </chars>
+</test>
+<test>
+<chars>± : . : ± : . : ± : . : ± </chars>
+</test>
+<test>
+<chars>▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄ </chars>
+</test>
+<test>
+<chars>╔══════════════╗ </chars>
+</test>
+<test>
+<chars>╚══════════════╝ </chars>
+</test>
+<test>
+<chars>┏━━━━━━━━━┓ </chars>
+</test>
+<test>
+<chars>┗━━━━━━━━━┛ </chars>
+</test>
+<test>
+<chars>Oº°‘¨ ¨‘°ºO </chars>
+</test>
+<test>
+<chars>•°o.O O.o°• </chars>
+</test>
+<test>
+<chars>¨°o.O O.o°¨ </chars>
+</test>
+<test>
+<chars>—¤÷(`[¤* *¤]´)÷¤— </chars>
+</test>
+<test>
+<chars>•·.·´¯`·.·• •·.·´¯`·.·•´ </chars>
+</test>
+<test>
+<chars>`·.(`·.¸ ¸.·´).·´ </chars>
+</test>
+<test>
+<chars>`·» »-(¯`v´¯)-» </chars>
+</test>
+<test>
+<chars>`•.¸¸.•´¯`•.¸¸.•´ </chars>
+</test>
+<test>
+<chars>`•.¸¸.••´´¯``•• .¸¸.•´ </chars>
+</test>
+<test>
+<chars>`•.•●•۰• ••.•´ </chars>
+</test>
+<test>
+<chars>×º°”˜`”°º× ×º°”˜`”°º× </chars>
+</test>
+<test>
+<chars>ண </chars>
+</test>
+<test>
+<chars>▀ ▁ ▂ ▃ ▄ ▅ ▆ ▇ █ ▉ ▊ ▋ ▌ ▍ ▎ ▏ ▐ </chars>
+</test>
+<test>
+<chars>░ ▒ ▓▕ ▖■ □ ▢ ▣ ▤ ▥ ▦ ▧ ▨ ▩ ▪ ▫ </chars>
+</test>
+<test>
+<chars>▬ ▭ ▮ ▯ ▰ ▱ ▲ △ ▴ ▵ ▶ ▷ ▸ ▹ ► ▻ ▼ ▽ ▾ ▿ </chars>
+</test>
+<test>
+<chars>◀ ◁ ◂ ◃ ◄ ◅ ◆ ◇ ◈ ◉ ◊ </chars>
+</test>
+<test>
+<chars>○ ◌ ◍ ◎ ● ◐ ◑ ◒ ◓ ◔ ◕ </chars>
+</test>
+<test>
+<chars>◖ ◗ ◘ ◙ ◚ ◛ ◜ ◝ ◞ ◟ </chars>
+</test>
+<test>
+<chars>◠ ◡ ◢ ◣ ◤ ◥ ◦ ◧ ◨ ◩ ◪ ◫ ◬ ◭ ◮ ◯ </chars>
+</test>
+<test>
+<chars>¡ † ‡ ↔ ↑ ↓ •«» ¤₯ ƒ ₴ ₥ ₦ № ₧ ₰ £ ៛ ₨ ₪ ৳ ₮ ₩ ¥ </chars>
+</test>
+<test>
+<chars>– — … ° ≈ ≠ ≤ ≥ ± − × ÷ ← → · § </chars>
+</test>
+<test>
+<chars>๑☺ ☻ ☼♣ ♥ ♦·۰•●○●ஐﻬ↔ ↕ ▪ ▫ ▬♦ ◊ ◦♫ ♪ ღˇ √ « » ™ ♂♀ ©№® ◦º°×°º◦ ´¯`·»ºØ´ ×º°”˜`”°º×»- ஆ ௰ Þ ௫ </chars>
+</test>
+<test>
+<chars>๑•ิ.•ั๑ ๑۩۞۩๑ ✿.｡.: ☂☃ ☄ ★ ☆ ☇ ☈ ☉ ☊ ☋ ☌ ☍ ☑ ☒☢ ☸ ☹ ☺ ☻ ☼ ☽ ☾ ♠ 　 ♡ ♢ ♣ ♤ ♥ ♦ ♧ ♨ ♩ ✙✈ ✉ ✌ ✁ ✎ ✐ ❀ ✰ ❁ ❤ ❥ ❦❧ ➳ ➽ εїз℡❣·۰•●○● </chars>
+</test>
+<test>
+<chars>ゃōゃ ♡๑۩ﺴ ☜ ☞ ☎ ☏♡ ⊙◎ ☺ ☻✖╄ஐﻬ ► ◄ ▧ ▨ ♨ ◐ ◑ ↔ ↕ ▪ ▫ ☼ ♦ ▀ ▄ █▌ ▐░ ▒ ▬♦ ◊ ◦ ☼ ♠♣ ▣ ▤ ▥ ▦ ▩ ◘ ◙ ◈ ♫ ♬ ♪ ♩ ♭ ♪ の ☆ → あ ぃ ￡ ❤ ｡◕‿◕｡ </chars>
+</test>
+<test>
+<chars>＃ ＠ ＆ ＊ ￥☸ ❁ ❀ ✿ ✾ ❃ ✺ ❇ ❈ ❊ ❉ ✱ ✲ ✩ ✫ ✬ ✭ ✮ ✰ ☆ ★ ✪ ¤ ☼ ☀ ☽ ☾ ❤ ♡ ღ☻ ☺ ❂ ◕ ⊕ ☉ Θ o O ♋ ☯ ㊝ ⊙ ◎ ◑ ◐ ۰ • ● ▪ ▫ ｡ ﾟ ๑ ☜ ☞ ☂ ♨ ☎ ☏ </chars>
+</test>
+<test>
+<chars>︻ ︼ ︽ ︾ 〈 〉 ︿ ﹀ ∩ ∪ ﹁ ﹂ ﹃ ﹄﹝ ﹞ ＜ ＞ ≦ ≧ ﹤ ﹥ 「 」 ︵ ︶ ︷ ︸ ︹ ︺〔 〕 【 】《 》 （ ） ｛ ｝ ﹙ ﹚ 『 』 ﹛ ﹜╳ ＋ － ﹢ × ÷ ＝ ≠ ≒ ∞ ˇ ± √ ⊥ ∠ ∟ ⊿ ㏒ </chars>
+</test>
+<test>
+<chars>▶ ▷ ◀ ◁ ☀ ☁ ☂ ☃ ☄ ★ ☆ ☇ ☈ ☉ ☊ ☋ ☌ ☍ ☑ ☒☢ ☸ ☹ ☺ ☻ ☼ ☽ ☾ ♠ 　 ♡ ♢ ♣ ♤ ♥ ♦ ♧ ♨ ♩ ✙ ✈ ✉ ✌ ✁ ✎ ✐ ❀ ✰ ❁ ❤ ❥ ❦❧ ➳ ➽ 〠 〄 ㍿ ♝ ♞ </chars>
+</test>
+<test>
+<chars>♯♩♪♫♬♭♮ ☎ ☏ ☪ ♈ ♨ ºº ₪ ¤ 큐 « » ™ ♂✿ ♥ の ↑ ↓ ← → ↖ ↗ ↙ ↘ ㊣ ◎ ○ ● ⊕ ⊙ ○　 △ ▲ ☆ ★ ◇ ◆ ■ □ ▽ ▼ § ￥ 〒 ￠ ￡ ※ ♀ ♂ © ® ⁂ ℡ ↂ░ ▣ ▤ ▥ ▦ ▧ </chars>
+</test>
+<test>
+<chars>✐✌✍✡✓✔✕✖ ♂ ♀ ♥ ♡ ☜ ☞ ☎ ☏ ⊙ ◎ ☺ ☻ ► ◄ ▧ ▨ ♨ ◐ ◑ ↔ ↕ ♥ ♡ ▪ ▫ ☼ ♦ ▀ ▄ █ ▌ ▐ ░ ▒ ▬ ♦ ◊ ◘ ◙ ◦ ☼ ♠ ♣ ▣ ▤ ▥ ▦ ▩ ◘ ◙ ◈ ♫ ♬ ♪ ♩ ♭ ♪ ✄☪☣☢☠ </chars>
+</test>
+<test>
+<chars>㊊㊋㊌㊍㊎㊏ ㊐㊑㊒㊓㊔㊕㊖㊗㊘㊜㊝㊞㊟㊠㊡㊢ ㊣㊤㊥㊦㊧㊨㊩㊪㊫㊬㊭㊮㊯㊰ </chars>
+</test>
+<test>
+<chars>✗✘✚✪✣✤✥✦✧✩✫✬✭✮✯✰ ✱✲✳❃❂❁❀✿✾✽✼✻✺✹✸✷ ✶✵✴❄❅❆❇❈❉❊❋❖☀☂☁【】┱ ┲ ❣ ✚ ✪ ✣ ✤ ✥ ✦ ❉ ❥ ❦ ❧ ❃ ❂ ❁ ❀ ✄ ☪ ☣ ☢ ☠ ☭ ♈ ➸ ✓ ✔ ✕ ✖ *.:｡✿*ﾟ‘ﾟ･✿.｡.: </chars>
+</test>
+<test>
+<chars>"【】〖〗＠﹕﹗/ "" _ `,·。≈{}~ ～() _ -『』√ $ @ * # ※ 々∞Ψ ∪∩∈∏ の ℡ ぁ §∮〝〞ミ灬ξ№∑⌒ξζω＊ㄨ ≮≯ ＋－×÷﹢﹣±／＝∫∮∝ ∞ ∧∨ ∑ ∏ ∥∠ ≌ ∽ ≦ ≧ ≒﹤﹥じ☆ "</chars>
+</test>
+<test>
+<chars>■♀『』◆◣◥▲Ψ ※◤ ◥ →№←㊣∑⌒〖〗＠ξζω□∮〓※∴ぷ▂▃▅▆█ ∏【】△√ ∩¤々♀♂∞①ㄨ≡↘↙▂▂ ▃ ▄ ▅ ▆ ▇ █┗┛╰☆╮ ≠ ▂ ▃ ▄ ▅┢┦aΡｐy .......♧♧ ☜♥☞.︻︼─一　▄︻┻┳═一 </chars>
+</test>
+<test>
+<chars>﹏◢ ◣ ◥ ◤ ▽ ▧ ▨ ▣ ▤ ▥ ▦ ▩ ◘ ◙ ▓ ▒ ░ Café № ＠ ㊣ ™ ℡ 凸 の ๑۞๑ ๑۩ﺴ ﺴ۩๑ o(‧'''‧)o ❆ べò⊹⊱⋛⋋ ⋌⋚⊰⊹ ⓛⓞⓥⓔ べ ☀ ☼ ☜ ☞ ⊙® ◈ ♦ ◊ ◦ ◇ ◆ εїз </chars>
+</test>
+<test>
+<chars>"☆·.¸¸.·´¯`·.¸¸.¤ ~♡のⓛⓞⓥⓔ♡~☃⊹⊱⋛⋌⋚⊰⊹✗/(*w*) ≡[。。]≡※◦º°×°º◦εїз´¯`·»｡｡♀♡╭☆╯ºØØºøº¤ø,¸¸,ºº¤øøºﷲﷲ°º¤ø,¸¸, "</chars>
+</test>
+<test>
+<chars>げこごさざしじすぜそぞただちぢっつづてでとどなにぬねのはば ♪♫╭♥ ๑•ิ.•ัﻬஐ ✎ぱひびぴふぶぷへべぺほぼぽまみむめも </chars>
+</test>
+<test>
+<chars>"❃❂❁❀✿✾✽✼✻✺✹✸✷ ✶✵✴❄❅❆❇❈❉❊❋❖❤❥❦❧ ☀ o O ＃♡ ┽┊﹎.εїз︷✿‧:﹎｡❤‧:❉:‧ .｡.:*･❀●•♪.。‧:❉:‧ °º¤ø,¸¸,ø¤º°`°º¤ø*.:｡✿*ﾟ‘ﾟ･✿.｡.:*.:｡✿*ﾟ’ﾟ･✿.｡✎*εїз "</chars>
+</test>
+<test>
+<chars>↔ ↕ ▪ → ︷╅╊✿ ❤`•.¸¸.•´´¯`•• .¸¸.•´¯`•.•●•۰• ••.•´¯`•.•• ••.•´¯`•.••—¤÷(`[¤* *¤]´)÷¤——(•·÷[ ]÷·•)— </chars>
+</test>
+<test>
+<chars>〓 ☆ ★┣┓┏┫×╰ノ◢ ◣ ◥ ◤ Ω ж ф юЮ ━╃ ╄━ ┛┗ ┓┏ ◇ ◆ ※ .'. ☂.'.❤ ♥ 『』 〖〗▓ ► ◄ ▒ ░ ▓ ╮╭ ╯╰ ァ ┱ ┲☃ ☎ ☏ ☺ ☻ ▧ ▨ ♨ ◘ ◙ ♠ ♧ ♣ ▣▤ ▥ ▦ ▩ ⊕ </chars>
+</test>
+<test>
+<chars>×º°”˜`”°º× ×º°”˜`”°º×»-(¯`v´¯)-» ×÷·.·´¯`·)» «(·´¯`·.·÷×*∩_∩* ⓛⓞⓥⓔ ╬ ╠ ╣∷ ღ ☃ ❆ ￡ ∆ ? Õ Ő ő ∞ © ‡ † ? ஜ ஒ ண இ ஆ ௰ </chars>
+</test>
+<test>
+<chars>♪♪♫▫—(•·÷[ ]÷·•)— ·÷±‡±±‡±÷· Oº°‘¨ ¨‘°ºO •°o.O O.o°• ¨°o.O O.o°¨—¤÷(`[¤* *¤]´)÷¤—•·.·´¯`·.·• •·.·´¯`·.·•´`·.(`·.¸ ¸.·´).·´`·» </chars>
+</test>
+<test>
+<chars>»-(¯`v´¯)-»█┗┛↘↙╰☆╮ ≠ ☜♥☞ ︻︼─一　▄︻┻┳═一 -─═┳︻　∝╬══→　::======>>　☆═━┈　┣▇▇▇═─ ■◆◣◥▲◤ ◥〓∴ぷ▂▃▅▆█ 【】 </chars>
+</test>
+<test>
+<chars>๑۞๑ ๑۩ﺴ ﺴ۩๑๑۩۞۩...¤¸¸.·´¯`·.¸·..>>--» «--..·.¸¸·´¯`·.¸¸¤... .•:´¨•☆ •.¸¸.•´´¯`•´❤ </chars>
+</test>
+<test>
+<chars>℠ ℡ ™ ¶ ₧ № ™ ℅ µ Æ æ Ǽ ǽ Ĳ ĳ Œ œ </chars>
+</test>
+<test>
+<chars>¼ ½ ¾ </chars>
+</test>
+<test>
+<chars>✠❖☸☠ ✠ </chars>
+</test>
+<test>
+<chars>Δ - ▹ - ◆ - ◇ - ◈ - ◉ - ◊ - ○ - ◌ - ◍ - ◎ - ● - ◐ - ◑ - ◒ -◓ - ◔ - ◕ - ☮ - ☯ </chars>
+</test>
+<test>
+<chars>✓ - ✔ - √ </chars>
+</test>
+<test>
+<chars>✕ - ✖ - ✗ - ✘ </chars>
+</test>
+<test>
+<chars>✙ - ✚ - ✛ - ✜ </chars>
+</test>
+<test>
+<chars>✩ - ✿ - ❀ - ❁ - ❄ - ❅ - ❆ - ❇ - ❤ </chars>
+</test>
+<test>
+<chars>♪ - ♫ - ♬ - ♭ - ♮ - ♯ </chars>
+</test>
+<test>
+<chars>✫ - ✬ - ✭ - ✮ - ✯ - ✰ - ✱ - ✲ - ✳ - ✴ - ✵ - ⋆ </chars>
+</test>
+<test>
+<chars>✈ - ✁ - ✂ </chars>
+</test>
+<test>
+<chars>♀ - ♂ </chars>
+</test>
+<test>
+<chars>↖ - ↗ - ↘ - ↙- ↚ - ↛ - ↜ - ↝ - ↩ - ↪ - ↫ - ↬ - ⇒ - ⇦- - ⇧- ⇨ - ⇩ - ➔ </chars>
+</test>
+<test>
+<chars>↭ - ↮ - ∿ </chars>
+</test>
+<test>
+<chars>∮ - ∭ - ∯ - ∰ - ∱ - ∲ - ∳ </chars>
+</test>
+<test>
+<chars>∴ - ∵ - ⋮ - ⋯ - ⋰ - ⋱ </chars>
+</test>
+<test>
+<chars>⊕ - ⊖ - ⊗ - ⊘ - ⊙ - ⊚ - ⊜ - ⊛ - ⊝ - ○ - ☼ </chars>
+</test>
+<test>
+<chars>⊞ - ⊟ - ⊠ - ⊡ </chars>
+</test>
+<test>
+<chars>⋎ - ⋏ </chars>
+</test>
+<test>
+<chars>⋐ - ⋑ - ⋒ - ⋓ </chars>
+</test>
+<test>
+<chars>⌘ - ⌠ - ⌡ </chars>
+</test>
+<test>
+<chars>℥ - Ω - ℧ - ℨ - ℩ </chars>
+</test>
+<test>
+<chars>¦ º · • ← ↑ → ↓ ↔ ↕ </chars>
+</test>
+<test>
+<chars>× ÷ − ± π ⁄ ∆ ∏ ∕ ∙ √ ∞ ≈ ≠ ≡ ≤ ≥ </chars>
+</test>
+<test>
+<chars>☺ ☻ ☼ ♀ ♂ ♠ ♣ ♥ ♦ ♪ ♫ </chars>
+</test>
+<test>
+<chars>▀ ▄ █ ▌ ▐ ░ ▒ ▓ ■ □ ▪ ▫ ▬ ▲ ► ▼ ◄ ◊ ○ ● ◘ ◙ ◦ Ξ ◕ </chars>
+</test>
+<test>
+<chars>§ ¬ ⌐ ‰ ′ ″ Ω ⌂ </chars>
+</test>
+<test>
+<chars>¤ ₪ </chars>
+</test>
+<test>
+<chars>¨ ¯ ´ ¸ ˆ ˇ ˉ ˘ ˙ ˚ ˛ ˜ ˝ ̀ ́ ̃ ̉ ̣ </chars>
+</test>
+<test>
+<chars>‼ ¡ ¿ ‽ “ ” „ ‘ ’ ‚ ‛ « » ‹ › … – — ― ‗ ‾ ‌ ‍ </chars>
+</test>
+<test>
+<chars>☼☽ </chars>
+</test>
+<test>
+<chars>ღ ♪ ♫ ♥ ♣ ♠ ♦ ● → ⇒ ► ◄ « » ☼ ☆ ☽ ☾ □ ▽ ↘↙╰╮ ¤ ю ◡ </chars>
+</test>
+<test>
+<chars>`•.¸¸.•´´¯`••.¸¸.•´´¯`•´ </chars>
+</test>
+<test>
+<chars>ツマシンなバスタドのメデるれはしないだろうりてたもですフクスイワダラテグー。 </chars>
+</test>
+<test>
+<chars>ィォッァ じ </chars>
+</test>
+<test>
+<chars>Г г Ґ ґ Ѓ ѓ ─ ╫╓ ╗ ╚ ╩ ╔ ╬ ╟ ╣ ├ ┤ ╘ ┴ ↔ ↓ ↑ ± Θ </chars>
+</test>
+<test>
+<chars>①②③④⑤⑥⑦⑧⑨⑩ ⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳ ⒶⒷⒸⒹⒺⒻ ⒼⒽⒾⒿⓀⓁ ⓂⓃⓄⓅⓆⓇ ⓈⓉⓊⓋⓌⓍ ⓎⓏ ⓐⓑⓒⓓⓔⓕ ⓖⓗⓘⓙⓚⓛ ⓜⓝⓞⓟⓠⓡ ⓢⓣⓤⓥⓦⓧ ⓨⓩ </chars>
+</test>
+<test>
+<chars>﹤ - ﹥ - ∝ - ∧ - ∨ - ∥ - ∠ - ≌ - ∽ - ≦ - ≧ - ≒ - ~ - ～ - ※ - ＊ -  - ≮ - ≯ - ＋ - － - × - ÷ - ﹢ - ± - ／ - ＝ - ⊹ - ⊱ - ⋛ - ⋋ - ⋌ - ⋚ - ⊰ - ⊹ - 彡 - ❝ - ❞ - ° - ﹌ - ﹎ - ╱ - ╲ - ☁ - Þ - ௫ - べ - ☪ - ∷ - ≈ </chars>
+</test>
+<test>
+<chars>ა ბ გ დ ე ვ ზ ჱ თ ი კ ლ მ ნ ჲ ო პ ჟ რ ს ტ ჳ უ ფ ქ ღ ყ შ ჩ ც ძ წ ჭ ხ ჴ ჯ ჰ ჵ ჶ </chars>
+</test>
+<test>
+<chars> !</chars>
+</test>
+<test>
+<chars>""""</chars>
+</test>
+<test>
+<chars>#</chars>
+</test>
+<test>
+<chars>$</chars>
+</test>
+<test>
+<chars>%</chars>
+</test>
+<test>
+<chars>'</chars>
+</test>
+<test>
+<chars>(</chars>
+</test>
+<test>
+<chars>)</chars>
+</test>
+<test>
+<chars>*</chars>
+</test>
+<test>
+<chars>+</chars>
+</test>
+<test>
+<chars>","</chars>
+</test>
+<test>
+<chars>-</chars>
+</test>
+<test>
+<chars>.</chars>
+</test>
+<test>
+<chars>/</chars>
+</test>
+<test>
+<chars>:</chars>
+</test>
+<test>
+<chars>;</chars>
+</test>
+<test>
+<chars>&lt;</chars>
+</test>
+<test>
+<chars>=</chars>
+</test>
+<test>
+<chars>></chars>
+</test>
+<test>
+<chars>?</chars>
+</test>
+<test>
+<chars>@</chars>
+</test>
+<test>
+<chars>[</chars>
+</test>
+<test>
+<chars>\</chars>
+</test>
+<test>
+<chars>]</chars>
+</test>
+<test>
+<chars>^</chars>
+</test>
+<test>
+<chars>_</chars>
+</test>
+<test>
+<chars>`</chars>
+</test>
+<test>
+<chars>{</chars>
+</test>
+<test>
+<chars>|</chars>
+</test>
+<test>
+<chars>}</chars>
+</test>
+<test>
+<chars>~</chars>
+</test>
+<test>
+<chars>&amp;</chars>
+</test>
+<test>
+<chars>&lt;</chars>
+</test>
+<test>
+<chars>&gt;</chars>
+</test>
+<test>
+<chars>&quot;</chars>
+</test>
+<test>
+<chars>&apos;</chars>
+</test>
+</testgroup>

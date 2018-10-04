@@ -9,7 +9,6 @@ using System.Windows.Media;
 using BackEnd;
 using LiveCharts;
 using LiveCharts.Wpf;
-using MetroFramework.Forms;
 
 namespace WPF_UI
 {
@@ -37,6 +36,7 @@ namespace WPF_UI
             await Task.Delay(TimeSpan.FromSeconds(5));
             NotificationTextBox.Clear();
         }
+
         private async Task CalcPieStatsAsync()
         {
             foreach (var item in StatsCalc.StatsPerCategotyAndTotalCalc(MonthlyExpenses.Expenses.ToList()))
@@ -67,7 +67,6 @@ namespace WPF_UI
             PieChartSeriesCollection.Clear();
             try
             {
-                
                 await CalcPieStatsAsync();
                 await CalcBalanceAsync();
             }
@@ -117,12 +116,12 @@ namespace WPF_UI
                     break;
             }
         }
-        private void Item_ExpensesObjChanged(Guid ToUpdateObjGuid)
+        private void Item_ExpensesObjChanged(Guid toUpdateObjGuid)
         {
             TriggerStatsCalcAsync();
             foreach (var expensesObj in MonthlyExpenses.Expenses)
             {
-                if (expensesObj.IdGuid == ToUpdateObjGuid)
+                if (expensesObj.IdGuid == toUpdateObjGuid)
                 {
                     MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Update, expensesObj);
                     break;
@@ -140,7 +139,7 @@ namespace WPF_UI
             var dg = sender as DataGrid;
 
             // alter this condition for whatever valid keys you want - avoid arrows/tab, etc.
-            if (dg != null && !dg.IsReadOnly && isAlphanumeric(e.Key))
+            if (dg != null && !dg.IsReadOnly && StaticMethods.isAlphanumeric(e.Key))
             {
                 var cell = dg.GetSelectedCell();
                 if (cell != null && cell.Column is DataGridTemplateColumn)
@@ -149,37 +148,26 @@ namespace WPF_UI
                     dg.BeginEdit();
 
                     TextBox textbox = FindVisualChild<TextBox>(cell);
-                    if (textbox != null)
-                    {   
-                        if (textbox.IsFocused == false)
-                        {
-                            textbox.SelectAll();
-                        }
+                    if (textbox != null && textbox.IsFocused == false)
+                    {
                         textbox.Focus();
+
+                        textbox.Clear();
+                        textbox.AppendText(StaticMethods.GetCharFromKey(e.Key).ToString());
+                        textbox.CaretIndex = textbox.Text.Length;
                     }
 
                     e.Handled = true;
                 }
             }
         }
-        private bool isAlphanumeric(Key eKey)
-        {
-            int keyValue = (int)eKey;
-            if ((keyValue >= 0x30 && keyValue <= 0x39) // numbers
-                || (keyValue >= 0x41 && keyValue <= 0x5A) // letters
-                || (keyValue >= 0x60 && keyValue <= 0x69) // numpad
-                || (eKey == Key.Enter))                     // enter
-            {
-                return true;
-            }
-            return false;
-        }
+
         private static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is T)
+                if (child is T)
                     return (T)child;
                 else
                 {
