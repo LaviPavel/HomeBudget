@@ -10,22 +10,22 @@ using log4net;
 namespace BackEnd
 {
     public enum UpdateAction { Add, Remove, Update }
-    public class DbHandler
+    public class DbHandler : IDbHandler
     {
-        private static ILog _log = LogManager.GetLogger(typeof(DbHandler));
-        //private SQLiteConnection _connection;
-        //private readonly string _defaultDbInstance = "HomeBudgetDb.db";
+        private static DbHandler _instance;
+        private readonly Object obj = new Object();
+        private ILog _log = LogManager.GetLogger(typeof(DbHandler));
+        private readonly string DefaultDbInstance = "HomeBudgetDb.db";
         private readonly string _monthExpensesTableArgs =
             "(`Guid` VARCHAR(100) NOT NULL UNIQUE, `Category` TEXT NOT NULL, `SubCategory` TEXT NOT NULL, `ExpectedAmount` INTEGER NOT NULL, `ActualAmount` INTEGER NOT NULL, `Description` TEXT )";
-        private static readonly Object obj = new Object();
 
-        public SQLiteConnection Connection;
-        public readonly string DefaultDbInstance = "HomeBudgetDb.db";
-        public string MonthTableName;
-        public DbHandler(string dbFileName = null)
+        public SQLiteConnection Connection { get; set; }
+
+        private DbHandler(string dbFileName = null)
         {
             InitDataBaseConnection(dbFileName);
         }
+        public static DbHandler Instance => _instance ?? (_instance = new DbHandler());
 
         private void InitDataBaseConnection(string dbFilePath = null)
         {
@@ -101,12 +101,16 @@ namespace BackEnd
                 }
             }
         }
-        private void CreateMonthTable()
+        private void CreateMonthTable(string monthTableName)
         {
-            CreateTable(this.MonthTableName, _monthExpensesTableArgs);
+            CreateTable(monthTableName, _monthExpensesTableArgs);
         }
 
-        public async Task Dbwriter(SQLiteCommand cmd)
+        private string getTableNameByDate(DateTime dateTime)
+        {
+            return "MonthData_" + dateTime.Month + "_" + dateTime.Year;
+        }
+        private async Task Dbwriter(SQLiteCommand cmd)
         {
             lock (obj)
             {
@@ -133,22 +137,24 @@ namespace BackEnd
             Connection.Close();
             SQLiteConnection.ClearAllPools();         
         }
-        public ObservableCollection<ExpensesObj> GetMonthDataFromDb()
+        public ObservableCollection<ExpensesObj> GetMonthDataFromDb(DateTime dateTime)
         {
             var expenses = new ObservableCollection<ExpensesObj>();
-            if (MonthTableName == null)
+            var monthTableName = getTableNameByDate(dateTime);
+
+            if (monthTableName == null)
             {
                 return null;
             }
 
-            if (!IsTableExists(this.MonthTableName))
+            if (!IsTableExists(monthTableName))
             {
-                CreateMonthTable();
+                CreateMonthTable(monthTableName);
             }
             
             using (SQLiteCommand command = Connection.CreateCommand())
             {
-                command.CommandText = @"select * from " + this.MonthTableName;
+                command.CommandText = @"select * from " + monthTableName;
                 var rdr = command.ExecuteReader();
 
                 while (rdr.Read())
@@ -160,7 +166,7 @@ namespace BackEnd
                     }
                     catch (Exception ex)
                     {
-                        _log.ErrorFormat("Error reading data from table {0}, {1}", this.MonthTableName, ex);
+                        _log.ErrorFormat("Error reading data from table {0}, {1}", monthTableName, ex);
                         throw;
                     }
                     
@@ -169,8 +175,11 @@ namespace BackEnd
 
             return expenses;
         }
-        public async void UpdateObjInMonthTable(UpdateAction action, ExpensesObj newExpensesObj)
+        public async void UpdateObjInMonthTable(UpdateAction action, ExpensesObj newExpensesObj, DateTime dateTime)
         {
+            //todo: add callback to savings
+            var monthTableName = getTableNameByDate(dateTime);
+
             SQLiteCommand command = Connection.CreateCommand();
             command.CommandType = CommandType.Text;
             command.Parameters.Add(new SQLiteParameter("@IdGuid", newExpensesObj.IdGuid));
@@ -183,17 +192,17 @@ namespace BackEnd
             switch (action)
             {
                 case UpdateAction.Add:
-                    command.CommandText = @"insert into " + this.MonthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount, Description) values " +
+                    command.CommandText = @"insert into " + monthTableName + " (Guid, Category, SubCategory, ExpectedAmount, ActualAmount, Description) values " +
                             "(@IdGuid, @NewCategory, @NewSubCategory, @NewExpectedAmount, @NewActualAmount, @NewDescription)";
                     break;
 
                 case UpdateAction.Remove:
-                    command.CommandText = @"DELETE FROM " + this.MonthTableName + 
+                    command.CommandText = @"DELETE FROM " + monthTableName + 
                             " Where Guid=@IdGuid";
                     break;
 
                 case UpdateAction.Update:
-                    command.CommandText = @"UPDATE " + this.MonthTableName +
+                    command.CommandText = @"UPDATE " + monthTableName +
                             " SET Category=@NewCategory, SubCategory=@NewSubCategory, ExpectedAmount=@NewExpectedAmount, ActualAmount=@NewActualAmount, Description=@NewDescription " +
                             "Where Guid=@IdGuid";
                     break;
@@ -202,7 +211,7 @@ namespace BackEnd
             await Dbwriter(command);
         }
 
-        
-
     }
+
+
 }

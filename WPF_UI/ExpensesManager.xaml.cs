@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,9 +17,17 @@ namespace WPF_UI
 {
     public partial class ExpensesManager
     {
-        private StatsCalculations StatsCalc { get; set; }
         public SeriesCollection PieChartSeriesCollection { get; set; } = new SeriesCollection();
-        public static MonthExpenses MonthlyExpenses { get; set; } = new MonthExpenses();
+
+        public static ObservableCollection<ExpensesObj> Expenses
+        {
+            get => _monthlyExpenses.Expenses;
+            set => value = _monthlyExpenses.Expenses;
+        }
+
+        public static IBackEnd _monthlyExpenses = MonthExpenses.Instance;
+        public static IBackEnd _ExpensesAnalysis = Analysis.Instance;
+
         private Func<ChartPoint, string> PointLabel { get; set; }
 
         public ExpensesManager()
@@ -24,11 +35,10 @@ namespace WPF_UI
             DataContext = this;
             InitializeComponent();
 
-            MonthlyExpenses.Expenses.CollectionChanged += Expenses_CollectionChanged;
+            Expenses.CollectionChanged += Expenses_CollectionChanged;
 
             PointLabel = chartPoint =>
                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-            StatsCalc = new StatsCalculations();
         }
 
         private async Task NotificationBoxClearAsync()
@@ -37,9 +47,9 @@ namespace WPF_UI
             NotificationTextBox.Clear();
         }
 
-        private async Task CalcPieStatsAsync()
+        private async Task UpdatePieStatsAsync(Dictionary<string, double> ExpensesPerCategory)
         {
-            foreach (var item in StatsCalc.StatsPerCategotyAndTotalCalc(MonthlyExpenses.Expenses.ToList()))
+            foreach (var item in ExpensesPerCategory)
             {
                 PieChartSeriesCollection.Add(new PieSeries
                 {
@@ -51,15 +61,16 @@ namespace WPF_UI
                 });
             }
         }
-        private async Task CalcBalanceAsync()
+        private async Task UpdateBalanceAsync()
         {
             var fontColor = Brushes.Green;
-            if (StatsCalc.Balance < 0)
+            var balance = _monthlyExpenses.GetBalance();
+            if (balance < 0)
             {
                 fontColor = Brushes.Red;
             }
 
-            TotalBalanceBox.Text = StatsCalc.Balance.ToString();
+            TotalBalanceBox.Text = balance.ToString(CultureInfo.InvariantCulture);
             TotalBalanceBox.Foreground = fontColor;
         }
         private async void TriggerStatsCalcAsync()
@@ -67,8 +78,8 @@ namespace WPF_UI
             PieChartSeriesCollection.Clear();
             try
             {
-                await CalcPieStatsAsync();
-                await CalcBalanceAsync();
+                await UpdatePieStatsAsync(_monthlyExpenses.GetExpensesPerCategory());
+                await UpdateBalanceAsync();
             }
             catch (Exception ex)
             {
@@ -79,7 +90,7 @@ namespace WPF_UI
         {
             if (DatePicker.SelectedDate != null)
             {
-                MonthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0, Guid.NewGuid()));
+                _monthlyExpenses.Expenses.Add(new ExpensesObj("new", "new", 0, 0, Guid.NewGuid()));
             }
             else
             {
@@ -87,29 +98,27 @@ namespace WPF_UI
             }
             
         }
-
         public async Task UiNotification(string message)
         {
             NotificationTextBox.Text = message;
             await NotificationBoxClearAsync();
         }
-
         private void Expenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             TriggerStatsCalcAsync();
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    ExpensesObj addedExpensesObj = MonthlyExpenses.Expenses.Last();
+                    ExpensesObj addedExpensesObj = _monthlyExpenses.Expenses.Last();
                     addedExpensesObj.ExpensesObjChanged += Item_ExpensesObjChanged;
-                    MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Add, addedExpensesObj);
+                    _monthlyExpenses.UpdateExObj_ToDB(UpdateAction.Add, addedExpensesObj);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     var removeExpensesObj = e.OldItems[0] as ExpensesObj;
-                    MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Remove, removeExpensesObj);
+                    _monthlyExpenses.UpdateExObj_ToDB(UpdateAction.Remove, removeExpensesObj);
                     break;
                 default:
-                    foreach (var item in MonthlyExpenses.Expenses)
+                    foreach (var item in _monthlyExpenses.Expenses)
                     {
                         item.ExpensesObjChanged += Item_ExpensesObjChanged;
                     }
@@ -119,11 +128,11 @@ namespace WPF_UI
         private void Item_ExpensesObjChanged(Guid toUpdateObjGuid)
         {
             TriggerStatsCalcAsync();
-            foreach (var expensesObj in MonthlyExpenses.Expenses)
+            foreach (var expensesObj in _monthlyExpenses.Expenses)
             {
                 if (expensesObj.IdGuid == toUpdateObjGuid)
                 {
-                    MonthlyExpenses.UpdateExObj_ToDB(UpdateAction.Update, expensesObj);
+                    _monthlyExpenses.UpdateExObj_ToDB(UpdateAction.Update, expensesObj);
                     break;
                 }
             }
@@ -132,7 +141,7 @@ namespace WPF_UI
         {
             //todo: if rowid 0 popup delete all
             ExpensesObj removeExpensesObj = ((FrameworkElement)sender).DataContext as ExpensesObj;
-            MonthlyExpenses.Expenses.Remove(removeExpensesObj);
+            _monthlyExpenses.Expenses.Remove(removeExpensesObj);
         }
         private void DataGrid_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {

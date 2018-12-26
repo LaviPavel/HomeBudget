@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace BackEnd
 {
-    public class StatsCalculations
+    class StatsAndGraphs : IStatsAndGraphs
     {
-        public double Balance { get; set; }
+        public double PeriodBalance { get; set; }
+        public Dictionary<string, double> ExpensesPerCategory { get; set; }
 
-        public Dictionary<string, double> StatsPerCategotyAndTotalCalc(List<ExpensesObj> Expenses)
+
+        public async Task CalcStats(List<ExpensesObj> expenses)
         {
             double totalExpenses = 0;
             double totalIncomes = 0;
 
             Dictionary<string, double> statsDictionary = new Dictionary<string, double>();
 
-            foreach (var expensesObj in Expenses)
+            foreach (var expensesObj in expenses)
             {
                 if (expensesObj.Category != "Income")
                 {
@@ -34,11 +36,12 @@ namespace BackEnd
                 }
             }
 
-            Balance = totalIncomes - totalExpenses;
-            return statsDictionary;
+            PeriodBalance = totalIncomes - totalExpenses;
+            ExpensesPerCategory = statsDictionary;
         }
-
 
         
     }
+
+
 }

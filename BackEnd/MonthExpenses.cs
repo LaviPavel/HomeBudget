@@ -1,118 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading.Tasks;
+using System.Linq;
 using log4net;
 
 namespace BackEnd
 {
-    public class ExpensesObj
+    public class MonthExpenses : IBackEnd
     {
-        private Guid _idGuid;
-        private string _category;
-        private string _subCategory;
-        private double _expectedAmount;
-        private double _actualAmount;
-        private string _description;
+        private static MonthExpenses _instance;
+        private DateTime _loadedDataTime;
+        private StatsAndGraphs _statsAndGraphs;
+        private readonly IDbHandler _dBhandler;
+        private ILog _log = LogManager.GetLogger(typeof(MonthExpenses));
 
-        public delegate void VoidDelegate(Guid idGuid);
-        public event VoidDelegate ExpensesObjChanged;
+        public ObservableCollection<ExpensesObj> Expenses { get; set; }
 
-        public Guid IdGuid
+        private MonthExpenses()
         {
-            get { return _idGuid;}
-            set { _idGuid = value; }
+            _statsAndGraphs = new StatsAndGraphs();
+            _dBhandler = DbHandler.Instance;
+            Expenses = new ObservableCollection<ExpensesObj>();
+            CalcStats();
         }
-        public string Category
+        public static MonthExpenses Instance => _instance ?? (_instance = new MonthExpenses());
+
+        private async void CalcStats()
         {
-            get { return _category; }
-            set
-            {
-                if (value != null)
-                {
-                    _category = value;
-                    OnExpensesObjChanged();
-                }
-            }
-        }
-        public string SubCategory
-        {
-            get { return _subCategory; }
-            set
-            {
-                if (value != null)
-                {
-                    _subCategory = value;
-                    OnExpensesObjChanged();
-                }
-            }
-        }
-        public double ExpectedAmount
-        {
-            get { return _expectedAmount; }
-            set
-            {
-                _expectedAmount = value;
-                OnExpensesObjChanged();
-            }
-        }
-        public double ActualAmount
-        {
-            get { return _actualAmount; }
-            set
-            {
-                _actualAmount = value;
-                OnExpensesObjChanged();
-            }
-        }
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                OnExpensesObjChanged();
-            }
+            await _statsAndGraphs.CalcStats(Expenses.ToList());
         }
 
-        public ExpensesObj(string category, string subCategory, double expectedAmount, double actualAmount, System.Guid idGuid,
-            string description = null)
+        public double GetBalance()
         {
-            IdGuid = idGuid == Guid.Empty ? Guid.NewGuid() : idGuid;
-            Category = category;
-            SubCategory = subCategory;
-            ExpectedAmount = expectedAmount;
-            ActualAmount = actualAmount;
-            Description = description;
+            return _statsAndGraphs.PeriodBalance;
         }
-        protected virtual void OnExpensesObjChanged()
+        public Dictionary<string, double> GetExpensesPerCategory()
         {
-            if (ExpensesObjChanged != null)
-            {
-                ExpensesObjChanged(this.IdGuid);
-            }
+            return _statsAndGraphs.ExpensesPerCategory;
         }
-    }
-
-    public class MonthExpenses
-    {
-        private int _month;
-        private int _year;
-        private DbHandler DBhandler = new DbHandler();
-        private static ILog _log = LogManager.GetLogger(typeof(MonthExpenses));
-
-        public ObservableCollection<ExpensesObj> Expenses { get; set; } = new ObservableCollection<ExpensesObj>();
 
 
-        public void LoadData(int month, int year)
+        public void LoadData(DateTime dateTime)
         {
-            _month = month;
-            _year = year;
-            DBhandler.MonthTableName = "MonthData_" + _month + "_" + _year;
-
+            _loadedDataTime = dateTime;
             Expenses.Clear();
-            foreach (var item in DBhandler.GetMonthDataFromDb())
+
+            foreach (var item in _dBhandler.GetMonthDataFromDb(dateTime))
             {
                 Expenses.Add(item);
             }
@@ -121,13 +54,36 @@ namespace BackEnd
             {
                 Expenses.Add(new ExpensesObj("Income", "Salary", 0, 1000, new Guid()));
             }
+
+            CalcStats();
         }
         public void UpdateExObj_ToDB(UpdateAction action, ExpensesObj objToActionOn)
         {
-            DBhandler.UpdateObjInMonthTable(action, objToActionOn);
+            try
+            {
+                _dBhandler.UpdateObjInMonthTable(action, objToActionOn, _loadedDataTime);
+                CalcStats();
+            }
+            catch (Exception ex)
+            {
+                //todo: throw notification
+                throw ex;
+            }
+            
         }
 
 
+        #region NotRelevantToMonthExpenses
+        public void LoadDataRange(DateTime startDateTime, DateTime endDateTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoadDataRange(Dictionary<int, int> selectedDates)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 
 }

@@ -13,6 +13,8 @@ namespace WPF_UI
 {
     public class DatePickerCalendar
     {
+        private static DateTime StartTime { get; set; }
+        private static DateTime EndTime { get; set; }
         public static readonly DependencyProperty IsMonthYearProperty =
             DependencyProperty.RegisterAttached("IsMonthYear", typeof(bool), typeof(DatePickerCalendar),
                                                 new PropertyMetadata(OnIsMonthYearChanged));
@@ -74,15 +76,48 @@ namespace WPF_UI
         private static void CalendarOnDisplayModeChanged(object sender, CalendarModeChangedEventArgs e)
         {
             var calendar = (Calendar)sender;
-            if (calendar.DisplayMode != CalendarMode.Month)
-                return;
-
             calendar.SelectedDate = GetSelectedCalendarDate(calendar.DisplayDate);
-
             var datePicker = GetCalendarsDatePicker(calendar);
+
+            if (calendar.DisplayMode != CalendarMode.Month) return;
+            if (calendar.SelectedDate == null) return;
+
+            DateTime selectedDateTime = calendar.SelectedDate.Value;
             datePicker.IsDropDownOpen = false;
 
-            ExpensesManager.MonthlyExpenses.LoadData(datePicker.SelectedDate.Value.Month, datePicker.SelectedDate.Value.Year);
+            switch (datePicker.Name)
+            {
+                case "DatePicker":
+                    ExpensesManager._monthlyExpenses.LoadData(selectedDateTime);
+                    break;
+                case "DatePickerStart":
+                    StartTime = selectedDateTime;
+                    break;
+                case "DatePickerEnd":
+                    EndTime = selectedDateTime;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+                    break;
+            }
+
+            if (StartTime != null && EndTime !=null)
+                {
+                    if (EndTime > StartTime)
+                    {
+                        LoadAnalysisData(StartTime, EndTime);
+                    }
+                    else
+                    {
+                        //todo: throw notification error
+                    }
+                }
+        }
+
+        private static void LoadAnalysisData(DateTime starTime, DateTime endTime)
+        {
+            ExpensesManager._ExpensesAnalysis.LoadDataRange(starTime, endTime);
         }
 
         private static Calendar GetDatePickerCalendar(object sender)
