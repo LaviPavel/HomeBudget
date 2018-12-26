@@ -117,7 +117,7 @@ namespace WPF_UI
 
         private static void LoadAnalysisData(DateTime starTime, DateTime endTime)
         {
-            ExpensesManager._ExpensesAnalysis.LoadDataRange(starTime, endTime);
+            ExpensesManager._expensesAnalysis.LoadDataRange(starTime, endTime);
         }
 
         private static Calendar GetDatePickerCalendar(object sender)

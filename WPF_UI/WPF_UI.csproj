@@ -147,6 +147,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnalysisTab.cs" />
+    <Compile Include="ExpensesTab.cs" />
     <Compile Include="StaticMethods.cs" />
     <Page Include="ExpensesManager.xaml">
       <SubType>Designer</SubType>
