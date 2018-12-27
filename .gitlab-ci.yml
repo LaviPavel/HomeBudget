@@ -1,30 +1,23 @@
-image: microsoft/dotnet
+image: microsoft/dotnet:latest
+
+stages:
+    - build
+    - test
 
 variables:
-  SOLUTION_NAME: "Expenses"
-  TESTPROJECT_NAME: "Tests"
-  MsBuildPath: "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\msbuild.exe"
-  NugetPath: "C:\\Gitlab-Runner\\NuGet\\nuget.exe"
+    test: "Test"
 
 before_script:
-  - echo "starting build for %SOLUTION_NAME%"
-  - echo "Restoring NuGet Packages..."
-  - '"%NugetPath%" restore "%SOLUTION_NAME%.sln"'
-stages:
-  - build
-  - test
+    - "cd src"
+    - "dotnet restore"
+
 build:
-  stage: build
-  script:
-  - echo "Release build..."
-  - '"%MsBuildPath%" /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "%SOLUTION_NAME%.sln"'
-  artifacts:
-    untracked: true
+    stage: build
+    script:
+        - "dotnet build"
+
 test:
-  stage: test
-  script:
-  - echo "starting tests"
-  - cd %TESTPROJECT_NAME%/bin/Release
-  - '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" /testcontainer:%TESTPROJECT_NAME%.dll'
-  dependencies:
-  - build
+    stage: test
+    script: 
+        - "cd $test"
+        - "dotnet test"
