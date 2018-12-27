@@ -43,12 +43,12 @@ namespace Tests
         [TestCleanup]
         public void TestCleanUp()
         {
-            SQLiteCommand command = TestDb.Connection.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.CommandText = "drop table " + TableName;
+            //SQLiteCommand command = TestDb.Connection.CreateCommand();
+            //command.CommandType = CommandType.Text;
+            //command.CommandText = "drop table " + TableName;
 
             //TestDb.Dbwriter(command);
-            TestDb.Close();
+            //TestDb.Close();
         }
 
         [TestMethod]
