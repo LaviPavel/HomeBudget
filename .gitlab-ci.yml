@@ -1,3 +1,5 @@
+image: microsoft/dotnet
+
 variables:
   SOLUTION_NAME: "Expenses"
   TESTPROJECT_NAME: "Tests"
