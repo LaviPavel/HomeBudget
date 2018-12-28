@@ -17,11 +17,11 @@ build:
   stage: build
   script:
     # Restore Dependencies (NuGet)
-    - nuget restore HomeBudget/Expenses.sln 
+    - nuget restore /builds/Pavel-Lit/HomeBudget/Expenses.sln 
     # Build Project
-    -  msbuild HomeBudget/Tests/Tests.csproj
+    -  msbuild /builds/Pavel-Lit/HomeBudget/Tests/Tests.csproj
 
 test:
   stage: test
   script:
-  - nunit-console HomeBudget/Tests/bun/debug/Tests.dll
+  - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bun/debug/Tests.dll
