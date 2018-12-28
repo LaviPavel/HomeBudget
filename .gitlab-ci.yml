@@ -10,18 +10,13 @@ before_script:
 
 # Stages
 stages:
-  - build
   - test
 
-build:
-  stage: build
+test:
+  stage: test
   script:
     # Restore Dependencies (NuGet)
     - nuget restore /builds/Pavel-Lit/HomeBudget/Expenses.sln 
     # Build Project
     - msbuild /builds/Pavel-Lit/HomeBudget/Tests/Tests.csproj
-
-test:
-  stage: test
-  script:
-  - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/Debug/Tests.dll
+	- nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/Debug/Tests.dll  
