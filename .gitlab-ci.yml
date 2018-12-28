@@ -19,4 +19,4 @@ test:
     - nuget restore /builds/Pavel-Lit/HomeBudget/Expenses.sln 
     # Build Project
     - msbuild /builds/Pavel-Lit/HomeBudget/Tests/Tests.csproj
-	- nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/Debug/Tests.dll
+    - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/Debug/Tests.dll
