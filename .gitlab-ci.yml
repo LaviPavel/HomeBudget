@@ -24,4 +24,4 @@ build:
 test:
   stage: test
   script:
-  - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bun/debug/Tests.dll
+  - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/debug/Tests.dll
