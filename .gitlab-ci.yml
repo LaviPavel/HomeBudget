@@ -24,4 +24,4 @@ build:
 test:
   stage: test
   script:
-  nunit-console HomeBudget/Tests/bun/debug/Tests.dll
+  - nunit-console HomeBudget/Tests/bun/debug/Tests.dll
