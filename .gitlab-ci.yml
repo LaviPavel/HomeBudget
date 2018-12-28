@@ -19,9 +19,9 @@ build:
     # Restore Dependencies (NuGet)
     - nuget restore /builds/Pavel-Lit/HomeBudget/Expenses.sln 
     # Build Project
-    -  msbuild /builds/Pavel-Lit/HomeBudget/Tests/Tests.csproj
+    - msbuild /builds/Pavel-Lit/HomeBudget/Tests/Tests.csproj
 
 test:
   stage: test
   script:
-  - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/debug/Tests.dll
+  - nunit-console /builds/Pavel-Lit/HomeBudget/Tests/bin/Debug/Tests.dll
