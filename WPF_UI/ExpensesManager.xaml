@@ -113,7 +113,7 @@
 
                     <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="100" Click="DataGridNewRowButton_Click" Grid.Row="3" Grid.Column="1"/>
                     <lvc:PieChart Name="PieChart" Hoverable="True" DataTooltip="{x:Null}" Series="{Binding PieChartSeriesCollection}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="3"/>
-                    <TextBox Name="TotalBalanceBox" TextAlignment="Center" FontSize="30" Height="40" Width="150" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Grid.Row="2" Grid.Column="3" Margin="75,165,76,196"/>
+                    <TextBox Name="TotalBalanceBox" Text="{Binding Path=MothBalanceValue,UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=MothBalanceColor,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" FontSize="30" Height="40" Width="150" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Grid.Row="2" Grid.Column="3" Margin="75,165,76,196"/>
                 </Grid>
             </TabItem>
             <TabItem>
@@ -141,7 +141,7 @@
                     <DatePicker x:Name="DatePickerStart" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM/yyyy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Text="MMM-yyyy"/>
                     <DatePicker x:Name="DatePickerEnd" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerDateFormat.DateFormat="MM-yyyy" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Grid.Row="1" Grid.Column="2" Text="MMM-yyyy"/>
 
-                    <lvc:PieChart Name="PieChart2" Hoverable="True" DataTooltip="{x:Null}" Series="{Binding PieChartSeriesCollection}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="4"/>
+                    <lvc:PieChart Name="PieChart2" Hoverable="True" DataTooltip="{x:Null}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="4"/>
                     <TextBox Name="TotalBalanceBox2" TextAlignment="Center" FontSize="30" Height="40" Width="150" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Grid.Row="2" Grid.Column="4" Margin="75,165,76,196"/>
 
                 </Grid>

@@ -88,7 +88,8 @@ namespace WPF_UI
             switch (datePicker.Name)
             {
                 case "DatePicker":
-                    ExpensesManager._monthlyExpenses.LoadData(selectedDateTime);
+                    ExpensesTab.LoadData(selectedDateTime);
+                    
                     break;
                 case "DatePickerStart":
                     StartTime = selectedDateTime;
@@ -117,7 +118,7 @@ namespace WPF_UI
 
         private static void LoadAnalysisData(DateTime starTime, DateTime endTime)
         {
-            ExpensesManager._expensesAnalysis.LoadDataRange(starTime, endTime);
+            AnalysisTab.LoadDataRange(starTime, endTime);
         }
 
         private static Calendar GetDatePickerCalendar(object sender)
