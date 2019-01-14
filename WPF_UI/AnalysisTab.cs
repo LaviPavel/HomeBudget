@@ -1,28 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using BackEnd;
+using WPF_UI.Annotations;
 
 namespace WPF_UI
 {
-    class AnalysisTab
+    public class AnalysisTab : INotifyPropertyChanged
     {
         private static AnalysisTab _instance;
-        public static IBackEnd _expensesAnalysis;
 
+        public static IBackEnd ExpensesAnalysis;
         public static AnalysisTab Instance => _instance ?? (_instance = new AnalysisTab());
 
-       private AnalysisTab()
+        private string _notification;
+        public string NotificationMessage {
+            get => _notification;
+            set
+            {
+                _notification = value;
+                OnPropertyChanged(NotificationMessage);
+            }
+        }
+        
+        private AnalysisTab()
         {
-            _expensesAnalysis = Analysis.Instance;
+            ExpensesAnalysis = Analysis.Instance;
+        }
+        private void ThrowNotification(string message)
+        {
+            NotificationMessage = message;
         }
 
-        public static void LoadDataRange(DateTime starTime, DateTime endTime)
+        public void LoadDataRange(DateTime starTime, DateTime endTime)
         {
-            _expensesAnalysis.LoadDataRange(starTime, endTime);
+            if (endTime > starTime)
+            {
+                ExpensesAnalysis.LoadDataRange(starTime, endTime);
+            }
+            else
+            {
+                ThrowNotification($"Selected Start time {starTime} bigger that End time {endTime}");
+            }
+
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

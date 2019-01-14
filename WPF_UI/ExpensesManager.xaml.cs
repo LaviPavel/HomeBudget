@@ -18,59 +18,74 @@ namespace WPF_UI
 {
     public partial class ExpensesManager : INotifyPropertyChanged
     {
-        private ExpensesTab _expensesTab;
-        private AnalysisTab _analisysTab;
-
         private Func<ChartPoint, string> PointLabel { get; set; }
-        
+
+        public static ExpensesTab ExpensesTabInstance;
+        public static AnalysisTab AnalysisTabInstance;
+
         public ExpensesManager()
         {
             DataContext = this;
-            _expensesTab = ExpensesTab.Instance;
-            _analisysTab = AnalysisTab.Instance;
+            ExpensesTabInstance = ExpensesTab.Instance;
+            AnalysisTabInstance = AnalysisTab.Instance;
             PieChartSeriesCollection = new SeriesCollection();
 
             InitializeComponent();
             Expenses.CollectionChanged += Expenses_CollectionChanged;
 
+            AnalysisTabInstance.PropertyChanged += AnalysisTabInstance_PropertyChanged;
+            ExpensesTabInstance.PropertyChanged += ExpensesTabInstance_PropertyChanged;
+
             PointLabel = chartPoint =>
-                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+                $"{chartPoint.Y} ({chartPoint.Participation:P})";
         }
 
-        #region ExpensesTab
+       #region ExpensesTab
 
-        private string mothBalanceValue;
+        private string _mothBalanceValue;
         public string MothBalanceValue
         {
-            get
-            {
-                return mothBalanceValue;
-
-            }
+            get => _mothBalanceValue;
             set
             {
-                mothBalanceValue = value;
+                _mothBalanceValue = value;
                 OnPropertyChanged("MothBalanceValue");
             }
         }
-
-        private SolidColorBrush mothBalanceColor;
+        private SolidColorBrush _mothBalanceColor;
         public SolidColorBrush MothBalanceColor
         {
-            get { return mothBalanceColor; }
+            get => _mothBalanceColor;
 
             set
             {
-                mothBalanceColor = value;
+                _mothBalanceColor = value;
                 OnPropertyChanged("MothBalanceColor");
             }
+        }
+
+        private string _expensesNotificationMessage;
+        public string ExpensesNotificationMessage
+        {
+            get => _expensesNotificationMessage;
+            set
+            {
+                _expensesNotificationMessage = value;
+                OnPropertyChanged("ExpensesNotificationMessage");
+            }
+        }
+
+        private void ExpensesTabInstance_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var s = sender as ExpensesTab;
+            ExpensesNotificationMessage = s.NotificationMessage;
         }
 
         public SeriesCollection PieChartSeriesCollection { get; set; }
         public ObservableCollection<ExpensesObj> Expenses
         {
-            get => _expensesTab.Expenses;
-            set => value = _expensesTab.Expenses;
+            get => ExpensesTabInstance.Expenses;
+            set => value = ExpensesTabInstance.Expenses;
         }
 
         
@@ -82,7 +97,8 @@ namespace WPF_UI
             }
             else
             {
-                await UiNotification("Please select Moth to fill monthly expenses ");
+                ExpensesNotificationMessage = "Please select Moth to fill monthly expenses ";
+                NotificationBoxClearAsync();
             }
         }
         private async Task UpdatePieStatsAsync(Dictionary<string, double> expensesPerCategory)
@@ -101,11 +117,11 @@ namespace WPF_UI
         }
         private void Item_ExpensesObjChanged(Guid toUpdateObjGuid)
         {
-            foreach (var expensesObj in _expensesTab.Expenses)
+            foreach (var expensesObj in ExpensesTabInstance.Expenses)
             {
                 if (expensesObj.IdGuid == toUpdateObjGuid)
                 {
-                    _expensesTab.UpdateExpensesObject(UpdateAction.Update, expensesObj);
+                    ExpensesTabInstance.UpdateExpensesObject(UpdateAction.Update, expensesObj);
                     break;
                 }
             }
@@ -127,8 +143,8 @@ namespace WPF_UI
             PieChartSeriesCollection.Clear();
             try
             {
-                await UpdatePieStatsAsync(_expensesTab.GetExpensesPerCategory());
-                await UpdateBalanceAsync(_expensesTab.GetExpensesBalance());
+                await UpdatePieStatsAsync(ExpensesTabInstance.GetExpensesPerCategory());
+                await UpdateBalanceAsync(ExpensesTabInstance.GetExpensesBalance());
             }
             catch (Exception ex)
             {
@@ -142,11 +158,11 @@ namespace WPF_UI
                 case NotifyCollectionChangedAction.Add:
                     ExpensesObj addedExpensesObj = Expenses.Last();
                     addedExpensesObj.ExpensesObjChanged += Item_ExpensesObjChanged;
-                    _expensesTab.UpdateExpensesObject(UpdateAction.Add, addedExpensesObj);
+                    ExpensesTabInstance.UpdateExpensesObject(UpdateAction.Add, addedExpensesObj);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     var removeExpensesObj = e.OldItems[0] as ExpensesObj;
-                    _expensesTab.UpdateExpensesObject(UpdateAction.Remove, removeExpensesObj);
+                    ExpensesTabInstance.UpdateExpensesObject(UpdateAction.Remove, removeExpensesObj);
                     break;
                 default:
                     foreach (var item in Expenses)
@@ -193,14 +209,35 @@ namespace WPF_UI
         }
         #endregion
 
-        #region AnalisysTab
+
+        #region AnalysisTab
+
+        private string _analysisNotificationMessage;
+        public string AnalysisNotificationMessage
+        {
+            get => _analysisNotificationMessage;
+            set
+            {
+                _analysisNotificationMessage = value;
+                OnPropertyChanged("AnalysisNotificationMessage");
+            }
+        }
+
+        private void AnalysisTabInstance_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var s = sender as AnalysisTab;
+            AnalysisNotificationMessage = s.NotificationMessage;
+            NotificationBoxClearAsync();
+        }
 
         #endregion
 
+        //todo: what if there are multiple errors between the delays, some will be cleared after 1 seconds or so
         private async Task NotificationBoxClearAsync()
         {
             await Task.Delay(TimeSpan.FromSeconds(5));
-            NotificationTextBox.Clear();
+            ExpensesNotificationTextBox.Clear();
+            AnalysisNotificationTextBox.Clear();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -208,11 +245,6 @@ namespace WPF_UI
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
-        public async Task UiNotification(string message)
-        {
-            NotificationTextBox.Text = message;
-            await NotificationBoxClearAsync();
-        }
-
+        
     }
 }

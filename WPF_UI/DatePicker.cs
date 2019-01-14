@@ -6,7 +6,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using BackEnd;
 using Calendar = System.Windows.Controls.Calendar;
 
 namespace WPF_UI
@@ -88,7 +87,7 @@ namespace WPF_UI
             switch (datePicker.Name)
             {
                 case "DatePicker":
-                    ExpensesTab.LoadData(selectedDateTime);
+                    ExpensesManager.ExpensesTabInstance.LoadData(selectedDateTime);
                     
                     break;
                 case "DatePickerStart":
@@ -96,29 +95,17 @@ namespace WPF_UI
                     break;
                 case "DatePickerEnd":
                     EndTime = selectedDateTime;
+                    
                     break;
-
                 default:
                     throw new NotImplementedException();
-                    break;
             }
 
-            if (StartTime != null && EndTime !=null)
-                {
-                    if (EndTime > StartTime)
-                    {
-                        LoadAnalysisData(StartTime, EndTime);
-                    }
-                    else
-                    {
-                        //todo: throw notification error
-                    }
-                }
-        }
-
-        private static void LoadAnalysisData(DateTime starTime, DateTime endTime)
-        {
-            AnalysisTab.LoadDataRange(starTime, endTime);
+            var dateSelectionCheck = DateTime.Now.Year - 10;
+            if (StartTime.Year > dateSelectionCheck && EndTime.Year > dateSelectionCheck)
+            {
+                ExpensesManager.AnalysisTabInstance.LoadDataRange(StartTime, EndTime);
+            }
         }
 
         private static Calendar GetDatePickerCalendar(object sender)

@@ -30,15 +30,14 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="600"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="700"/>
         </Grid.RowDefinitions>
 
         <TabControl>
             <TabItem>
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Blue" Foreground="Blue"/>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Expenses" Foreground="Black" FontWeight="Bold" FontSize="14"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
@@ -46,7 +45,9 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="400"/>
-                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
@@ -114,12 +115,15 @@
                     <Button x:Name="DataGridNewRowButton" Content="Add Row" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="100" Click="DataGridNewRowButton_Click" Grid.Row="3" Grid.Column="1"/>
                     <lvc:PieChart Name="PieChart" Hoverable="True" DataTooltip="{x:Null}" Series="{Binding PieChartSeriesCollection}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="3"/>
                     <TextBox Name="TotalBalanceBox" Text="{Binding Path=MothBalanceValue,UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=MothBalanceColor,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" FontSize="30" Height="40" Width="150" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Grid.Row="2" Grid.Column="3" Margin="75,165,76,196"/>
+
+                    <Separator VerticalAlignment="Stretch"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" />
+                    <TextBox Name="ExpensesNotificationTextBox" Text="{Binding Path=ExpensesNotificationMessage, UpdateSourceTrigger=PropertyChanged}" Height="20" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"/>
                 </Grid>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Red" Foreground="Red"/>
+                        <TextBlock Text="Analysis" Foreground="Black" FontWeight="Bold" FontSize="14"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
@@ -127,7 +131,9 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="400"/>
-                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
@@ -144,13 +150,14 @@
                     <lvc:PieChart Name="PieChart2" Hoverable="True" DataTooltip="{x:Null}" LegendLocation="Bottom" InnerRadius="100" Grid.Row="2" Grid.Column="4"/>
                     <TextBox Name="TotalBalanceBox2" TextAlignment="Center" FontSize="30" Height="40" Width="150" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Grid.Row="2" Grid.Column="4" Margin="75,165,76,196"/>
 
+                    <Separator VerticalAlignment="Stretch"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" />
+                    <TextBox Name="AnalysisNotificationTextBox" Text="{Binding Path=AnalysisNotificationMessage, UpdateSourceTrigger=PropertyChanged}" Height="30" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"/>
+
                 </Grid>
             </TabItem>
         </TabControl>
 
-        <Separator Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" />
-        <TextBox Name="NotificationTextBox" VerticalAlignment="Bottom" Height="20" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" FontWeight="Bold" Foreground="Red" Grid.Row="2" />
-
+        
     </Grid>
 </mah:MetroWindow>
 

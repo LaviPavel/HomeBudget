@@ -1,57 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using BackEnd;
-using LiveCharts;
-using LiveCharts.Wpf;
+using WPF_UI.Annotations;
 
 namespace WPF_UI
 {
-    public class ExpensesTab
+    public class ExpensesTab : INotifyPropertyChanged
     {
         private static ExpensesTab _instance;
-        public static IBackEnd _monthlyExpenses;
+        public static IBackEnd MonthlyExpenses;
 
         public static ExpensesTab Instance => _instance ?? (_instance = new ExpensesTab());
 
         public ObservableCollection<ExpensesObj> Expenses
         {
-            get => _monthlyExpenses.Expenses;
-            set => value = _monthlyExpenses.Expenses;
+            get => MonthlyExpenses.Expenses;
+            set => value = MonthlyExpenses.Expenses;
+        }
+
+        private string _notification;
+        public string NotificationMessage
+        {
+            get => _notification;
+            set
+            {
+                _notification = value;
+                OnPropertyChanged(NotificationMessage);
+            }
         }
 
         private ExpensesTab()
         {
-            _monthlyExpenses = MonthExpenses.Instance;
+            MonthlyExpenses = MonthExpenses.Instance;
         }
 
-        public static void LoadData(DateTime monthToLoad)
+        public void LoadData(DateTime monthToLoad)
         {
-            _monthlyExpenses.LoadData(monthToLoad);
+            MonthlyExpenses.LoadData(monthToLoad);
         }
 
         public void UpdateExpensesObject(UpdateAction update, ExpensesObj expensesObj)
         {
-            _monthlyExpenses.UpdateExObj_ToDB(update, expensesObj);
+            MonthlyExpenses.UpdateExObj_ToDB(update, expensesObj);
         }
 
         public Dictionary<string, double> GetExpensesPerCategory()
         {
-            return _monthlyExpenses.GetExpensesPerCategory();
+            return MonthlyExpenses.GetExpensesPerCategory();
         }
 
         public double GetExpensesBalance()
         {
-            return _monthlyExpenses.GetBalance();
+            return MonthlyExpenses.GetBalance();
         }
 
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
