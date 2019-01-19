@@ -37,7 +37,7 @@ namespace WPF_UI
             MonthlyExpenses = MonthExpenses.Instance;
         }
 
-        public void LoadData(DateTime monthToLoad)
+        public async void LoadData(DateTime monthToLoad)
         {
             MonthlyExpenses.LoadData(monthToLoad);
         }
@@ -56,7 +56,6 @@ namespace WPF_UI
         {
             return MonthlyExpenses.GetBalance();
         }
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;

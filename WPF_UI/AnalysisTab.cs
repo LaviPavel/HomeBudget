@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using BackEnd;
@@ -14,6 +16,13 @@ namespace WPF_UI
         public static AnalysisTab Instance => _instance ?? (_instance = new AnalysisTab());
 
         private string _notification;
+
+        public ObservableCollection<ExpensesObj> Expenses
+        {
+            get => ExpensesAnalysis.Expenses;
+            set => value = ExpensesAnalysis.Expenses;
+        }
+
         public string NotificationMessage {
             get => _notification;
             set
@@ -32,11 +41,11 @@ namespace WPF_UI
             NotificationMessage = message;
         }
 
-        public void LoadDataRange(DateTime starTime, DateTime endTime)
+        public async void LoadDataRange(DateTime starTime, DateTime endTime)
         {
             if (endTime > starTime)
             {
-                ExpensesAnalysis.LoadDataRange(starTime, endTime);
+                await ExpensesAnalysis.LoadDataRange(starTime, endTime);
             }
             else
             {
@@ -45,6 +54,15 @@ namespace WPF_UI
 
         }
 
+        public Dictionary<string, double> GetExpensesPerCategory()
+        {
+            return ExpensesAnalysis.GetExpensesPerCategory();
+        }
+
+        public double GetExpensesBalance()
+        {
+            return ExpensesAnalysis.GetBalance();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

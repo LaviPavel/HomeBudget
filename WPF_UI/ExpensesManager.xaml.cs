@@ -26,41 +26,53 @@ namespace WPF_UI
         public ExpensesManager()
         {
             DataContext = this;
+            
+            //ExpensesTab
             ExpensesTabInstance = ExpensesTab.Instance;
-            AnalysisTabInstance = AnalysisTab.Instance;
             PieChartSeriesCollection = new SeriesCollection();
 
-            InitializeComponent();
             Expenses.CollectionChanged += Expenses_CollectionChanged;
-
-            AnalysisTabInstance.PropertyChanged += AnalysisTabInstance_PropertyChanged;
             ExpensesTabInstance.PropertyChanged += ExpensesTabInstance_PropertyChanged;
+
+            //AnalysisTab
+            AnalysisTabInstance = AnalysisTab.Instance;
+            AnalysisPieChartSeriesCollection = new SeriesCollection();
+
+            AnalysisExpenses.CollectionChanged += AnalysisExpenses_CollectionChanged;
+            AnalysisTabInstance.PropertyChanged += AnalysisTabInstance_PropertyChanged;
+
+            //SavingTab
+
+
+            //General
+            InitializeComponent();
 
             PointLabel = chartPoint =>
                 $"{chartPoint.Y} ({chartPoint.Participation:P})";
+
         }
 
-       #region ExpensesTab
+        #region ExpensesTab
 
-        private string _mothBalanceValue;
-        public string MothBalanceValue
+        private string _monthBalanceValue;
+        public string MonthBalanceValue
         {
-            get => _mothBalanceValue;
+            get => _monthBalanceValue;
             set
             {
-                _mothBalanceValue = value;
-                OnPropertyChanged("MothBalanceValue");
+                _monthBalanceValue = value;
+                OnPropertyChanged("MonthBalanceValue");
             }
         }
-        private SolidColorBrush _mothBalanceColor;
-        public SolidColorBrush MothBalanceColor
+        private SolidColorBrush _monthBalanceColor;
+        public SolidColorBrush MonthBalanceColor
         {
-            get => _mothBalanceColor;
+            get => _monthBalanceColor;
 
             set
             {
-                _mothBalanceColor = value;
-                OnPropertyChanged("MothBalanceColor");
+                _monthBalanceColor = value;
+                OnPropertyChanged("MonthBalanceColor");
             }
         }
 
@@ -88,7 +100,6 @@ namespace WPF_UI
             set => value = ExpensesTabInstance.Expenses;
         }
 
-        
         private async void DataGridNewRowButton_Click(object sender, RoutedEventArgs e)
         {
             if (DatePicker.SelectedDate != null)
@@ -101,20 +112,7 @@ namespace WPF_UI
                 NotificationBoxClearAsync();
             }
         }
-        private async Task UpdatePieStatsAsync(Dictionary<string, double> expensesPerCategory)
-        {
-            foreach (var item in expensesPerCategory)
-            {
-                PieChartSeriesCollection.Add(new PieSeries
-                {
-                    Title = item.Key,
-                    Values = new ChartValues<double> { item.Value },
-                    PushOut = 5,
-                    DataLabels = true,
-                    LabelPoint = PointLabel
-                });
-            }
-        }
+
         private void Item_ExpensesObjChanged(Guid toUpdateObjGuid)
         {
             foreach (var expensesObj in ExpensesTabInstance.Expenses)
@@ -125,9 +123,9 @@ namespace WPF_UI
                     break;
                 }
             }
-            TriggerStatsCalcAsync();
+            TriggerStatsCalcAsync(PieChartSeriesCollection, ExpensesTabInstance.GetExpensesPerCategory(), ExpensesTabInstance.GetExpensesBalance());
         }
-        private async Task UpdateBalanceAsync(double balance)
+        private async Task UpdateExpensesBalanceAsync(double balance)
         {
             var fontColor = Brushes.Green;
             if (balance < 0)
@@ -135,22 +133,10 @@ namespace WPF_UI
                 fontColor = Brushes.Red;
             }
 
-            MothBalanceValue = balance.ToString(CultureInfo.InvariantCulture);
-            MothBalanceColor = fontColor;
+            MonthBalanceValue = balance.ToString(CultureInfo.InvariantCulture);
+            MonthBalanceColor = fontColor;
         }
-        private async void TriggerStatsCalcAsync()
-        {
-            PieChartSeriesCollection.Clear();
-            try
-            {
-                await UpdatePieStatsAsync(ExpensesTabInstance.GetExpensesPerCategory());
-                await UpdateBalanceAsync(ExpensesTabInstance.GetExpensesBalance());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
         private void Expenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -172,7 +158,7 @@ namespace WPF_UI
                     break;
             }
 
-            TriggerStatsCalcAsync();
+            TriggerStatsCalcAsync(PieChartSeriesCollection, ExpensesTabInstance.GetExpensesPerCategory(), ExpensesTabInstance.GetExpensesBalance());
         }
         private void DataGrid_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -211,6 +197,34 @@ namespace WPF_UI
 
 
         #region AnalysisTab
+        public SeriesCollection AnalysisPieChartSeriesCollection { get; set; }
+        public ObservableCollection<ExpensesObj> AnalysisExpenses
+        {
+            get => AnalysisTabInstance.Expenses;
+            set => value = AnalysisTabInstance.Expenses;
+        }
+
+        private string _analysisBalanceValue;
+        public string AnalysisBalanceValue
+        {
+            get => _analysisBalanceValue;
+            set
+            {
+                _analysisBalanceValue = value;
+                OnPropertyChanged("AnalysisBalanceValue");
+            }
+        }
+        private SolidColorBrush _analysisBalanceColor;
+        public SolidColorBrush AnalysisBalanceColor
+        {
+            get => _analysisBalanceColor;
+
+            set
+            {
+                _analysisBalanceColor = value;
+                OnPropertyChanged("AnalysisBalanceColor");
+            }
+        }
 
         private string _analysisNotificationMessage;
         public string AnalysisNotificationMessage
@@ -230,7 +244,41 @@ namespace WPF_UI
             NotificationBoxClearAsync();
         }
 
+        private void AnalysisExpenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            TriggerStatsCalcAsync(AnalysisPieChartSeriesCollection, AnalysisTabInstance.GetExpensesPerCategory(), AnalysisTabInstance.GetExpensesBalance());
+        }
         #endregion
+
+        private async void TriggerStatsCalcAsync(SeriesCollection PieChartSeriesCollection, Dictionary<string, double> expensesPerCategory, double periodBalance)
+        {
+            PieChartSeriesCollection.Clear();
+            try
+            {
+                await UpdatePieStatsAsync(PieChartSeriesCollection, expensesPerCategory);
+                //todo: generize balance based on tap type?
+                await UpdateExpensesBalanceAsync(periodBalance);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async Task UpdatePieStatsAsync(SeriesCollection PieChartSeriesCollection, Dictionary<string, double> expensesPerCategory)
+        {
+            foreach (var item in expensesPerCategory)
+            {
+                PieChartSeriesCollection.Add(new PieSeries
+                {
+                    Title = item.Key,
+                    Values = new ChartValues<double> { item.Value },
+                    PushOut = 5,
+                    DataLabels = true,
+                    LabelPoint = PointLabel
+                });
+            }
+        }
 
         //todo: what if there are multiple errors between the delays, some will be cleared after 1 seconds or so
         private async Task NotificationBoxClearAsync()

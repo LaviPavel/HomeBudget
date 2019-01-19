@@ -13,9 +13,9 @@ namespace BackEnd
 
         double GetBalance();
         Dictionary<string, double> GetExpensesPerCategory();
-        void LoadData(DateTime dateTime);
-        void LoadDataRange(DateTime startDateTime, DateTime endDateTime);
-        void LoadDataRange(Dictionary<int, int> selectedDates);
+        Task LoadData(DateTime dateTime);
+        Task LoadDataRange(DateTime startDateTime, DateTime endDateTime);
+        Task LoadDataRange(Dictionary<int, int> selectedDates);
         void UpdateExObj_ToDB(UpdateAction action, ExpensesObj objToActionOn);
     }
 }

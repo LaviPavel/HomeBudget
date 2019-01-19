@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using log4net;
 
 namespace BackEnd
@@ -23,6 +24,7 @@ namespace BackEnd
             Expenses = new ObservableCollection<ExpensesObj>();
             CalcStats();
         }
+
         public static MonthExpenses Instance => _instance ?? (_instance = new MonthExpenses());
 
         private async void CalcStats()
@@ -39,8 +41,7 @@ namespace BackEnd
             return _statsAndGraphs.ExpensesPerCategory;
         }
 
-
-        public void LoadData(DateTime dateTime)
+        public async Task LoadData(DateTime dateTime)
         {
             _loadedDataTime = dateTime;
             Expenses.Clear();
@@ -74,12 +75,12 @@ namespace BackEnd
 
 
         #region NotRelevantToMonthExpenses
-        public void LoadDataRange(DateTime startDateTime, DateTime endDateTime)
+        public async Task LoadDataRange(DateTime startDateTime, DateTime endDateTime)
         {
             throw new NotImplementedException();
         }
 
-        public void LoadDataRange(Dictionary<int, int> selectedDates)
+        public async Task LoadDataRange(Dictionary<int, int> selectedDates)
         {
             throw new NotImplementedException();
         }

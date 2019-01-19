@@ -21,9 +21,16 @@ namespace BackEnd
             _statsAndGraphs = new StatsAndGraphs();
             _dBhandler = DbHandler.Instance;
             Expenses = new ObservableCollection<ExpensesObj>();
+
+            CalcStats();
         }
 
-        public async void LoadDataRange(DateTime startDateTime, DateTime endDateTime)
+        private async void CalcStats()
+        {
+            await _statsAndGraphs.CalcStats(Expenses.ToList());
+        }
+
+        public async Task LoadDataRange(DateTime startDateTime, DateTime endDateTime)
         {
             var date = startDateTime;
 
@@ -36,7 +43,8 @@ namespace BackEnd
 
                 date = date.AddMonths(1);
             }
-            await _statsAndGraphs.CalcStats(Expenses.ToList());
+
+            CalcStats();
         }
 
         public Dictionary<string, double> GetExpensesPerCategory()
@@ -44,19 +52,19 @@ namespace BackEnd
             return _statsAndGraphs.ExpensesPerCategory;
         }
 
-        public void LoadDataRange(Dictionary<int, int> selectedDates)
+        public double GetBalance()
+        {
+            return _statsAndGraphs.PeriodBalance;
+        }
+
+        public async Task LoadDataRange(Dictionary<int, int> selectedDates)
         {
             throw new NotImplementedException();
         }
 
         #region NotRelevantToAnalysis
         
-        public double GetBalance()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoadData(DateTime dateTime)
+        public async Task LoadData(DateTime dateTime)
         {
             throw new NotImplementedException();
         }
